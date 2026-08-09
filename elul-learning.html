@@ -1,0 +1,2475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Elul 5786 — Sponsor a Seder of Learning | YC Learning Program</title>
+<meta name="description" content="Sponsor Torah learning in the Yeshiva College Beit Midrash this Elul. Dedicate a seder in memory of a loved one, for a refuah shleimah, or in honour of a simcha.">
+<meta name="theme-color" content="#0A101C">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Inter:wght@300;400;500;600;700&display=swap">
+
+<style>
+/* ============================================================
+   ELUL 5786 — tokens
+   ============================================================ */
+:root{
+  /* night */
+  --night:      #070C16;
+  --night-1:    #0A101C;
+  --night-2:    #101A2C;
+  --night-3:    #16243B;
+  --night-line: rgba(214,178,106,.18);
+
+  /* parchment */
+  --paper:      #F6F2E9;
+  --paper-2:    #FFFDF8;
+  --paper-sunk: #EDE6D8;
+
+  /* ink */
+  --ink:        #131A24;
+  --ink-2:      #414F60;
+  --ink-3:      #71818F;
+  --on-night:   #F2ECDF;
+  --on-night-2: #B9C4D4;
+  --on-night-3: #7E8CA3;
+
+  /* flame */
+  --gold:       #D6B26A;
+  --gold-bright:#F0D294;
+  --gold-deep:  #A67C2E;
+  --flame:      #FF9E42;
+  --flame-hot:  #FFD98A;
+  --ember:      #E86A2C;
+
+  --rule:       rgba(19,26,36,.14);
+  --rule-soft:  rgba(19,26,36,.07);
+
+  --font-display:"Cormorant Garamond","Iowan Old Style",Palatino,Georgia,serif;
+  --font-body:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  --font-hebrew:"Frank Ruhl Libre","Times New Roman",serif;
+
+  --pad:clamp(1.15rem,5vw,2rem);
+  --maxw:1180px;
+  --r:14px;
+
+  --shadow-1:0 1px 2px rgba(10,16,28,.05), 0 10px 30px -18px rgba(10,16,28,.35);
+  --shadow-2:0 2px 4px rgba(10,16,28,.06), 0 24px 60px -28px rgba(10,16,28,.45);
+  --glow:0 0 30px -6px rgba(214,178,106,.45);
+
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--font-body);
+  font-size:1rem;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+h1,h2,h3,h4{margin:0;font-family:var(--font-display);font-weight:600;line-height:1.08;letter-spacing:-.015em;text-wrap:balance}
+p{margin:0}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:where(a,button,input,select,textarea,summary,[tabindex]):focus-visible{
+  outline:2px solid var(--gold); outline-offset:3px; border-radius:4px;
+}
+::selection{background:rgba(214,178,106,.35)}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+}
+
+/* ---------- layout ---------- */
+.wrap{width:100%;max-width:var(--maxw);margin-inline:auto;padding-inline:var(--pad)}
+.narrow{max-width:820px}
+section{position:relative}
+.sec{padding-block:clamp(4rem,10vw,7.5rem)}
+.night{background:var(--night-1);color:var(--on-night)}
+.night h1,.night h2,.night h3{color:#fff}
+
+.eyebrow{
+  font-family:var(--font-body);font-size:.6875rem;font-weight:600;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--gold-deep);
+  display:flex;align-items:center;gap:.7rem;
+}
+.night .eyebrow{color:var(--gold)}
+.eyebrow::after{content:"";height:1px;flex:1;background:linear-gradient(90deg,currentColor,transparent);opacity:.45;max-width:120px}
+.eyebrow.center{justify-content:center}
+.eyebrow.center::after{display:none}
+.eyebrow.center::before{content:"";height:1px;width:36px;background:currentColor;opacity:.45}
+
+h2.big{font-size:clamp(2.1rem,5.6vw,3.6rem);margin-block:.55rem .9rem}
+.lede{font-size:clamp(1.02rem,2.1vw,1.18rem);color:var(--ink-2);max-width:62ch;line-height:1.7}
+.night .lede{color:var(--on-night-2)}
+
+.heb{font-family:var(--font-hebrew);direction:rtl;unicode-bidi:isolate}
+/* direction:rtl makes these start-align right; keep them under their
+   left-aligned headings instead. Centred contexts inherit and stay centred. */
+.hero__heb,.tier__heb,.card .heb,.pull .heb,.src__heb{text-align:left}
+
+/* ---------- reveal ----------
+   Scoped to .js so the page is fully readable if JS never runs. */
+.js .rv{opacity:0;transform:translateY(22px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.js .rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.js .rv{opacity:1;transform:none}}
+
+/* ============================================================
+   NAV
+   ============================================================ */
+.nav{
+  position:sticky;top:0;z-index:80;
+  background:rgba(7,12,22,.72);
+  backdrop-filter:saturate(160%) blur(14px);
+  -webkit-backdrop-filter:saturate(160%) blur(14px);
+  border-bottom:1px solid rgba(214,178,106,.14);
+  transition:background .35s var(--ease);
+}
+.nav__bar{display:flex;align-items:center;gap:1rem;height:64px}
+.brand{display:flex;align-items:center;gap:.65rem;margin-right:auto;color:#fff}
+.brand__txt{display:flex;flex-direction:column;line-height:1.1}
+.brand__txt b{font-family:var(--font-display);font-size:1.05rem;font-weight:600;letter-spacing:.01em}
+.brand__txt small{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:600}
+.nav__links{display:none;gap:1.6rem;align-items:center}
+.nav__links a{font-size:.875rem;color:var(--on-night-2);transition:color .25s}
+.nav__links a:hover{color:#fff}
+@media (min-width:920px){.nav__links{display:flex}}
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
+  padding:.72rem 1.35rem;border-radius:999px;font-size:.875rem;font-weight:600;
+  letter-spacing:.01em;transition:transform .25s var(--ease),box-shadow .25s var(--ease),background .25s;
+  will-change:transform;text-align:center;
+}
+.btn--gold{background:linear-gradient(150deg,var(--gold-bright),var(--gold));color:#231705;box-shadow:0 6px 20px -8px rgba(214,178,106,.7)}
+.btn--gold:hover{transform:translateY(-2px);box-shadow:0 12px 28px -10px rgba(214,178,106,.85)}
+.btn--ghost{border:1px solid rgba(214,178,106,.4);color:var(--gold-bright)}
+.btn--ghost:hover{background:rgba(214,178,106,.1);transform:translateY(-2px)}
+.btn--ink{background:var(--ink);color:#fff}
+.btn--ink:hover{transform:translateY(-2px);box-shadow:var(--shadow-2)}
+.btn--lg{padding:.95rem 1.9rem;font-size:.95rem}
+.btn--block{width:100%}
+
+.burger{
+  position:relative;display:grid;place-items:center;width:44px;height:44px;border-radius:999px;
+  border:1px solid rgba(240,210,148,.55);background:rgba(255,253,248,.08);
+  color:var(--gold-bright);box-shadow:inset 0 0 0 1px rgba(255,255,255,.04);
+  transition:background .22s var(--ease),border-color .22s var(--ease),transform .22s var(--ease);
+}
+.burger:hover{background:rgba(240,210,148,.16);border-color:rgba(240,210,148,.8)}
+.burger:active{transform:scale(.96)}
+.burger span{
+  grid-area:1/1;display:block;width:18px;height:2px;margin:0;background:currentColor;border-radius:999px;
+  transition:transform .24s var(--ease),opacity .16s var(--ease),width .24s var(--ease);
+}
+.burger span+span{margin-top:0}
+.burger span:nth-child(1){transform:translateY(-6px)}
+.burger span:nth-child(3){transform:translateY(6px)}
+.burger[aria-expanded="true"]{background:var(--gold-bright);border-color:var(--gold-bright);color:#231705}
+.burger[aria-expanded="true"] span:nth-child(1){transform:rotate(45deg)}
+.burger[aria-expanded="true"] span:nth-child(2){opacity:0;width:4px}
+.burger[aria-expanded="true"] span:nth-child(3){transform:rotate(-45deg)}
+@media (min-width:920px){.burger{display:none}}
+
+.mobile{
+  position:fixed;inset:64px 0 auto 0;z-index:70;min-height:calc(100svh - 64px);
+  opacity:0;visibility:hidden;pointer-events:none;transform:translateY(-8px);
+  background:linear-gradient(180deg,rgba(7,12,22,.18),rgba(7,12,22,.58));
+  backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);
+  transition:opacity .22s var(--ease),transform .22s var(--ease),visibility 0s linear .22s;
+}
+.mobile.open{opacity:1;visibility:visible;pointer-events:auto;transform:none;transition-delay:0s}
+.mobile__in{
+  max-height:calc(100svh - 64px);overflow:auto;padding:.85rem 0 1.15rem;
+  background:rgba(255,253,248,.98);border-bottom:1px solid rgba(166,124,46,.24);
+  box-shadow:0 26px 70px -46px rgba(7,12,22,.78);
+}
+.mobile__in nav{display:grid;gap:.35rem;padding:.1rem 0}
+.mobile__in a{
+  min-height:44px;display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  padding:.72rem .9rem;border-radius:10px;font-size:.95rem;font-weight:600;
+  color:var(--ink);border:1px solid transparent;
+  transition:background .18s var(--ease),border-color .18s var(--ease),transform .18s var(--ease);
+}
+.mobile__in a:not(.btn)::after{
+  content:"";width:7px;height:7px;flex:none;border-top:1.5px solid currentColor;border-right:1.5px solid currentColor;
+  transform:rotate(45deg);opacity:.42;
+}
+.mobile__in a:hover{background:var(--paper);border-color:var(--rule-soft);transform:translateX(2px)}
+.mobile__in .btn{
+  margin-top:.55rem;min-height:48px;justify-content:center;border-radius:12px;
+  color:#231705;background:linear-gradient(150deg,var(--gold-bright),var(--gold));
+  box-shadow:0 14px 30px -20px rgba(7,12,22,.85);
+}
+.mobile__in .btn:hover{background:linear-gradient(150deg,var(--gold-bright),var(--gold));border-color:transparent;transform:translateY(-1px)}
+body.menu-open{overflow:hidden}
+
+.progress{position:absolute;left:0;bottom:-1px;height:2px;width:0;background:linear-gradient(90deg,var(--gold-deep),var(--gold-bright));box-shadow:0 0 12px rgba(214,178,106,.8);z-index:2}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{
+  position:relative;overflow:hidden;color:var(--on-night);
+  background:
+    radial-gradient(120% 85% at 50% -10%, #1B2C49 0%, #0C1424 45%, #070C16 100%);
+  padding-block:clamp(3.5rem,9vw,6rem) clamp(4rem,9vw,6.5rem);
+  isolation:isolate;
+}
+#embers{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.85}
+.hero::after{
+  content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:radial-gradient(closest-side at 50% 22%, rgba(255,180,90,.16), transparent 70%);
+}
+.hero .wrap{position:relative;z-index:2}
+.hero__grid{display:grid;gap:clamp(2.5rem,5vw,4rem);align-items:center}
+@media (min-width:960px){.hero__grid{grid-template-columns:1.05fr .95fr}}
+
+.hero__heb{
+  font-family:var(--font-hebrew);direction:rtl;font-size:clamp(1.05rem,2.4vw,1.35rem);
+  color:var(--gold-bright);letter-spacing:.02em;margin-bottom:.85rem;
+}
+.hero__heb b{font-weight:700;text-shadow:0 0 22px rgba(240,210,148,.45)}
+h1.hero__h{font-size:clamp(2.6rem,7.2vw,4.6rem);font-weight:500;color:#fff;letter-spacing:-.02em}
+h1.hero__h em{font-style:italic;color:var(--gold-bright);position:relative}
+.hero__sub{margin-top:1.15rem;font-size:clamp(1.02rem,2.2vw,1.2rem);color:var(--on-night-2);max-width:52ch;line-height:1.7}
+.hero__cta{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:2rem}
+.hero__note{margin-top:1.1rem;font-size:.8rem;color:var(--on-night-3);display:flex;align-items:center;gap:.5rem}
+.dot{width:6px;height:6px;border-radius:50%;background:#57D68A;box-shadow:0 0 0 3px rgba(87,214,138,.18);animation:pulse 2.4s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 3px rgba(87,214,138,.18)}50%{box-shadow:0 0 0 7px rgba(87,214,138,0)}}
+
+/* countdown */
+.count{
+  background:linear-gradient(165deg,rgba(255,255,255,.07),rgba(255,255,255,.02));
+  border:1px solid rgba(214,178,106,.22);
+  border-radius:20px;padding:clamp(1.3rem,3vw,1.9rem);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  box-shadow:0 30px 70px -40px #000;
+}
+.count__top{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;margin-bottom:1.1rem}
+.count__label{font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:600}
+.count__heb{font-family:var(--font-hebrew);direction:rtl;font-size:1.1rem;color:var(--on-night-2)}
+.count__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;text-align:center}
+.count__cell{background:rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:.7rem .3rem}
+.count__n{font-family:var(--font-display);font-size:clamp(1.5rem,4.5vw,2.05rem);font-weight:600;color:#fff;font-variant-numeric:tabular-nums;line-height:1}
+.count__u{font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--on-night-3);margin-top:.35rem}
+
+.meter{margin-top:1.35rem}
+.meter__head{display:flex;justify-content:space-between;font-size:.78rem;color:var(--on-night-2);margin-bottom:.5rem}
+.meter__head b{color:var(--gold-bright);font-weight:600}
+.meter__track{height:8px;border-radius:99px;background:rgba(255,255,255,.09);overflow:hidden;position:relative}
+.meter__fill{height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,var(--gold-deep),var(--gold-bright),var(--flame-hot));transition:width 1.6s var(--ease);box-shadow:0 0 16px rgba(240,210,148,.55)}
+
+/* stats strip */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;margin-top:clamp(3rem,6vw,4.5rem);background:rgba(214,178,106,.16);border:1px solid rgba(214,178,106,.16);border-radius:18px;overflow:hidden}
+.stat{background:rgba(10,16,28,.72);padding:1.4rem 1.2rem;text-align:center}
+.stat b{display:block;font-family:var(--font-display);font-size:clamp(1.9rem,5vw,2.6rem);font-weight:600;color:var(--gold-bright);line-height:1;font-variant-numeric:tabular-nums}
+.stat span{display:block;margin-top:.5rem;font-size:.78rem;color:var(--on-night-2);letter-spacing:.02em}
+
+/* ============================================================
+   KING IN THE FIELD
+   ============================================================ */
+.field{background:var(--paper-2);position:relative;overflow:hidden}
+.field::before{
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
+  background-image:radial-gradient(rgba(19,26,36,.05) 1px,transparent 1px);
+  background-size:22px 22px;
+  -webkit-mask-image:radial-gradient(120% 80% at 50% 0%,#000,transparent 75%);
+          mask-image:radial-gradient(120% 80% at 50% 0%,#000,transparent 75%);
+}
+.field .wrap{position:relative}
+.field__grid{display:grid;gap:clamp(2rem,5vw,3.5rem)}
+@media (min-width:900px){.field__grid{grid-template-columns:.85fr 1.15fr;align-items:start}}
+.pull{
+  font-family:var(--font-display);font-size:clamp(1.6rem,3.6vw,2.15rem);
+  line-height:1.3;color:var(--ink);font-weight:500;
+}
+.pull .heb{display:block;font-size:.86em;color:var(--gold-deep);margin-bottom:.5rem}
+.field__body p+p{margin-top:1.05rem}
+.field__body{color:var(--ink-2);font-size:1.03rem;line-height:1.78}
+
+/* intentions */
+.cards{display:grid;gap:1.1rem;margin-top:clamp(2.5rem,5vw,3.5rem)}
+@media (min-width:760px){.cards{grid-template-columns:repeat(3,1fr)}}
+.card{
+  position:relative;background:var(--paper-2);border:1px solid var(--rule-soft);
+  border-radius:var(--r);padding:1.7rem 1.5rem 1.6rem;overflow:hidden;
+  transition:transform .4s var(--ease),box-shadow .4s var(--ease),border-color .4s;
+  box-shadow:var(--shadow-1);
+}
+.card::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,var(--gold-deep),var(--gold-bright));transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease)}
+.card:hover{transform:translateY(-5px);box-shadow:var(--shadow-2);border-color:rgba(214,178,106,.4)}
+.card:hover::before{transform:scaleX(1)}
+.card__ico{
+  width:44px;height:44px;border-radius:12px;display:grid;place-items:center;margin-bottom:1.05rem;
+  background:linear-gradient(150deg,rgba(214,178,106,.2),rgba(214,178,106,.06));
+  border:1px solid rgba(214,178,106,.3);color:var(--gold-deep);
+}
+.card__ico svg{width:21px;height:21px}
+.card h3{font-size:1.32rem;margin-bottom:.15rem}
+.card .heb{font-size:1rem;color:var(--gold-deep);margin-bottom:.6rem}
+.card p{color:var(--ink-2);font-size:.935rem;line-height:1.7}
+
+/* ============================================================
+   THE BOARD
+   ============================================================ */
+.board{
+  background:
+    radial-gradient(110% 70% at 50% 0%, #14213A 0%, #0A101C 55%, #070C16 100%);
+  color:var(--on-night);
+}
+.board__head{display:grid;gap:1.5rem;align-items:end;margin-bottom:2.4rem}
+@media (min-width:880px){.board__head{grid-template-columns:1fr auto}}
+.legend{display:flex;flex-wrap:wrap;gap:1rem;font-size:.76rem;color:var(--on-night-3)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:.45rem;vertical-align:-1px}
+.legend .l-open{background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.18)}
+.legend .l-taken{background:linear-gradient(150deg,var(--gold-bright),var(--gold-deep))}
+.legend .l-today{background:transparent;border:1.5px solid #57D68A;box-shadow:0 0 8px rgba(87,214,138,.6)}
+
+.grid29{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:.6rem}
+@media (min-width:700px){.grid29{grid-template-columns:repeat(auto-fill,minmax(102px,1fr));gap:.7rem}}
+
+.day{
+  position:relative;aspect-ratio:1/1.06;border-radius:12px;overflow:hidden;
+  background:linear-gradient(165deg,rgba(255,255,255,.055),rgba(255,255,255,.015));
+  border:1px solid rgba(255,255,255,.09);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.15rem;
+  padding:.5rem .35rem;text-align:center;
+  transition:transform .3s var(--ease),border-color .3s,background .3s,box-shadow .3s;
+  will-change:transform;
+}
+.day:hover,.day:focus-visible{transform:translateY(-4px) scale(1.02);border-color:rgba(214,178,106,.55);box-shadow:0 14px 30px -18px #000, var(--glow)}
+.day__heb{font-family:var(--font-hebrew);font-size:1.42rem;font-weight:700;color:#fff;line-height:1;letter-spacing:.02em}
+.day__date{font-size:.6rem;letter-spacing:.06em;color:var(--on-night-3);text-transform:uppercase}
+.day__pips{display:flex;gap:3px;margin-top:.3rem}
+.day__pips i{width:12px;height:3px;border-radius:2px;background:rgba(255,255,255,.18)}
+.day__pips i.on{background:linear-gradient(90deg,var(--gold),var(--flame-hot));box-shadow:0 0 6px rgba(240,210,148,.8)}
+.day__pips i.off{background:transparent;border:1px solid rgba(255,255,255,.12);opacity:.35}
+.day__name{
+  font-size:.58rem;line-height:1.25;color:var(--gold-bright);margin-top:.25rem;
+  max-width:100%;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
+  padding-inline:2px;
+}
+.day.full{
+  background:linear-gradient(165deg,rgba(214,178,106,.2),rgba(214,178,106,.05));
+  border-color:rgba(214,178,106,.42);
+}
+.day.part{border-color:rgba(214,178,106,.28)}
+.day.today{box-shadow:0 0 0 1.5px #57D68A, 0 0 22px -6px rgba(87,214,138,.7)}
+.day.past{opacity:.42}
+.day.closed{opacity:.34;cursor:not-allowed}
+.day.closed:hover,.day.closed:focus-visible{transform:none;border-color:rgba(255,255,255,.09);box-shadow:none}
+.day__flame{
+  position:absolute;top:6px;right:7px;width:7px;height:11px;border-radius:50% 50% 45% 45%;
+  background:radial-gradient(ellipse at 50% 70%,#fff 0%,var(--flame-hot) 35%,var(--flame) 65%,rgba(232,106,44,.2) 100%);
+  filter:blur(.2px);box-shadow:0 0 10px rgba(255,158,66,.9);
+  animation:fl 2.6s infinite alternate ease-in-out;
+}
+@keyframes fl{0%{transform:scaleY(1) translateX(0);opacity:.95}35%{transform:scaleY(1.14) translateX(-.5px);opacity:1}70%{transform:scaleY(.93) translateX(.5px);opacity:.9}100%{transform:scaleY(1.06);opacity:1}}
+
+.board__foot{margin-top:1.6rem;font-size:.8rem;color:var(--on-night-3);text-align:center}
+
+/* dialog */
+dialog.sheet{
+  border:0;padding:0;background:transparent;max-width:min(520px,calc(100vw - 2rem));width:100%;
+  color:var(--on-night);
+}
+dialog.sheet::backdrop{background:rgba(4,8,15,.72);backdrop-filter:blur(6px)}
+.sheet__in{
+  background:linear-gradient(170deg,#131F35,#0B1220);
+  border:1px solid rgba(214,178,106,.3);border-radius:20px;padding:1.7rem;
+  box-shadow:0 40px 90px -40px #000;
+}
+.sheet__x{position:absolute;top:14px;right:14px;width:32px;height:32px;border-radius:8px;display:grid;place-items:center;color:var(--on-night-2);transition:background .2s}
+.sheet__x:hover{background:rgba(255,255,255,.08);color:#fff}
+.sheet__hd{display:flex;align-items:center;gap:.9rem;margin-bottom:1.2rem;padding-right:2rem}
+.sheet__badge{width:52px;height:52px;border-radius:13px;display:grid;place-items:center;flex:none;background:linear-gradient(155deg,rgba(214,178,106,.24),rgba(214,178,106,.06));border:1px solid rgba(214,178,106,.32)}
+.sheet__badge span{font-family:var(--font-hebrew);font-size:1.5rem;font-weight:700;color:var(--gold-bright);line-height:1}
+.sheet__hd h3{font-size:1.35rem;color:#fff}
+.sheet__hd small{font-size:.75rem;color:var(--on-night-3);letter-spacing:.05em}
+.slot{
+  display:flex;align-items:center;gap:.85rem;padding:.95rem 1rem;border-radius:12px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);margin-bottom:.65rem;
+}
+.slot__t{flex:1;min-width:0}
+.slot__t b{display:block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--on-night-3);font-weight:600}
+.slot__t span{display:block;font-family:var(--font-display);font-size:1.08rem;color:#fff;margin-top:.15rem;line-height:1.3}
+.slot__t .heb{font-family:var(--font-hebrew);font-size:.9rem;color:var(--gold-bright);margin-top:.1rem;text-align:left}
+.slot--open .slot__t span{color:var(--on-night-3);font-style:italic;font-size:.98rem}
+.slot .btn{padding:.55rem 1rem;font-size:.78rem;flex:none}
+
+/* ============================================================
+   CARD BUILDER
+   ============================================================ */
+.builder{background:var(--paper-sunk)}
+.builder__grid{display:grid;gap:clamp(1.8rem,4vw,3rem);align-items:start;margin-top:2.6rem}
+@media (min-width:980px){.builder__grid{grid-template-columns:.85fr 1.15fr}}
+
+.form{background:var(--paper-2);border:1px solid var(--rule-soft);border-radius:18px;padding:1.6rem;box-shadow:var(--shadow-1)}
+.f{margin-bottom:1.15rem}
+.f:last-child{margin-bottom:0}
+.f label{display:block;font-size:.72rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);margin-bottom:.45rem}
+.f input,.f select{
+  width:100%;padding:.72rem .85rem;border-radius:10px;border:1px solid var(--rule);
+  background:var(--paper);color:var(--ink);font-size:.95rem;font-family:inherit;
+  transition:border-color .25s,box-shadow .25s,background .25s;
+}
+.f input:focus,.f select:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(214,178,106,.2);background:#fff}
+.f input.heb{font-family:var(--font-hebrew);direction:rtl;text-align:right;font-size:1.05rem}
+.f__hint{font-size:.74rem;color:var(--ink-3);margin-top:.4rem}
+.seg{display:grid;grid-template-columns:repeat(2,1fr);gap:.4rem}
+@media (min-width:420px){.seg{grid-template-columns:repeat(3,1fr)}}
+@media (min-width:660px){.seg{grid-template-columns:repeat(5,1fr)}}
+
+.check{display:flex;gap:.65rem;align-items:flex-start;cursor:pointer;font-size:.9rem;color:var(--ink-2);line-height:1.5}
+.check input{width:18px;height:18px;flex:none;margin-top:.15rem;accent-color:var(--gold-deep)}
+.pledge{
+  margin-top:1.4rem;padding:1rem 1.1rem;border-radius:12px;background:var(--paper);
+  border:1px solid var(--rule-soft);font-size:.92rem;line-height:1.6;color:var(--ink-2);
+}
+.pledge b{color:var(--ink);font-weight:600}
+.seg button{
+  padding:.6rem .3rem;border-radius:10px;border:1px solid var(--rule);background:var(--paper);
+  font-size:.78rem;font-weight:500;color:var(--ink-2);transition:all .25s var(--ease);
+}
+.seg button:hover{border-color:var(--gold);color:var(--ink)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink);box-shadow:var(--shadow-1)}
+.form__actions{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.5rem}
+.form__actions .btn{flex:1;min-width:150px}
+
+.f--row{display:grid;gap:.9rem}
+@media (min-width:520px){.f--row{grid-template-columns:1fr 1fr}}
+.f--row .f{margin-bottom:0}
+.sep{
+  display:flex;align-items:center;gap:.8rem;margin:1.6rem 0 1.2rem;
+  font-size:.68rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3);
+}
+.sep::after{content:"";flex:1;height:1px;background:var(--rule-soft)}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.status{
+  margin-top:.9rem;font-size:.86rem;line-height:1.55;padding:.75rem .9rem;border-radius:10px;display:none;
+}
+.status.show{display:block}
+.status--bad{background:#FCEEEA;color:#8A2A12;border:1px solid #F0C4B6}
+.done{
+  background:var(--paper-2);border:1px solid rgba(214,178,106,.5);border-radius:18px;
+  padding:2rem 1.7rem;box-shadow:var(--shadow-1);text-align:center;
+}
+.done__tick{
+  width:52px;height:52px;border-radius:50%;margin:0 auto 1.1rem;display:grid;place-items:center;
+  background:linear-gradient(150deg,var(--gold-bright),var(--gold));color:#231705;
+}
+.done h3{font-size:1.6rem;margin-bottom:.5rem}
+.done .heb{font-family:var(--font-hebrew);direction:rtl;color:var(--gold-deep);font-size:1.1rem;margin-bottom:.9rem}
+.done p{color:var(--ink-2);font-size:.95rem;line-height:1.7}
+.done__slot{
+  margin:1.1rem auto;padding:.8rem 1rem;border-radius:12px;background:var(--paper);
+  border:1px solid var(--rule-soft);font-family:var(--font-display);font-size:1.12rem;color:var(--ink);
+}
+.done__actions{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.4rem}
+.done__actions .btn{flex:1;min-width:160px}
+
+/* how to pay */
+.pay{margin-top:1.5rem;text-align:left}
+.pay--before{
+  margin-top:1.2rem;padding:1rem 1.1rem;border-radius:12px;
+  background:var(--paper);border:1px solid var(--rule-soft);
+}
+.pay__hd{
+  display:flex;align-items:baseline;justify-content:space-between;gap:1rem;margin-bottom:.7rem;
+  font-size:.68rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3);
+}
+.pay__hd button{font-size:.72rem;letter-spacing:.04em;text-transform:none;color:var(--gold-deep);font-weight:600}
+.pay__hd button:hover{text-decoration:underline}
+.pay__intro{font-size:.84rem;color:var(--ink-2);line-height:1.6;margin-bottom:.8rem}
+.pay__box{border:1px solid var(--rule-soft);border-radius:12px;overflow:hidden;background:var(--paper)}
+.pay--before .pay__box{background:var(--paper-2)}
+.pay__row{display:flex;gap:1rem;padding:.62rem .9rem;font-size:.88rem;border-bottom:1px solid var(--rule-soft)}
+.pay__row:last-child{border-bottom:0}
+.pay__row dt{flex:none;width:9.5rem;color:var(--ink-3)}
+.pay__row dd{margin:0;color:var(--ink);font-weight:500;overflow-wrap:anywhere}
+.pay__ref{
+  margin-top:.8rem;padding:.85rem 1rem;border-radius:12px;text-align:center;
+  background:linear-gradient(150deg,rgba(214,178,106,.22),rgba(214,178,106,.07));
+  border:1px solid rgba(214,178,106,.45);
+}
+.pay__ref small{display:block;font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-deep);font-weight:600;margin-bottom:.25rem}
+.pay__ref b{font-family:var(--font-mono,ui-monospace,"SF Mono",Menlo,monospace);font-size:1.25rem;letter-spacing:.06em;color:var(--ink)}
+.pay__why{margin-top:.6rem;font-size:.8rem;color:var(--ink-3);line-height:1.55}
+.pay__actions{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:.9rem}
+.pay__actions .btn{flex:1;min-width:170px}
+.pay-modal{
+  border:0;padding:0;background:transparent;width:min(440px,calc(100vw - 2rem));
+  color:var(--ink);
+}
+.pay-modal::backdrop{background:rgba(4,8,15,.72);backdrop-filter:blur(6px)}
+.pay-modal__in{
+  position:relative;background:var(--paper-2);border:1px solid rgba(214,178,106,.42);
+  border-radius:18px;padding:1.45rem;box-shadow:0 34px 80px -44px #000;
+}
+.pay-modal__x{
+  position:absolute;top:12px;right:12px;width:32px;height:32px;border-radius:8px;
+  display:grid;place-items:center;color:var(--ink-3);
+}
+.pay-modal__x:hover{background:var(--paper);color:var(--ink)}
+.pay-modal h3{font-size:1.45rem;padding-right:2rem}
+.pay-modal p{font-size:.92rem;color:var(--ink-2);line-height:1.65;margin-top:.7rem}
+.pay-modal__url{
+  display:block;margin-top:.8rem;padding:.72rem .8rem;border-radius:10px;background:var(--paper);
+  border:1px solid var(--rule-soft);font-size:.82rem;color:var(--ink);overflow-wrap:anywhere;
+}
+.pay-modal__actions{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.1rem}
+.pay-modal__actions .btn{flex:1;min-width:150px}
+@media (max-width:520px){
+  .pay__row{display:block;padding:.72rem .9rem}
+  .pay__row dt{width:auto;margin-bottom:.18rem;font-size:.74rem}
+  .pay__row dd{font-size:.9rem}
+}
+
+/* the card */
+.stage{perspective:1400px;padding:clamp(.5rem,3vw,1.5rem) 0}
+.mcard{
+  position:relative;width:100%;aspect-ratio:16/9.6;border-radius:18px;
+  transform-style:preserve-3d;transition:transform .45s var(--ease);
+  background:linear-gradient(160deg,#0E1626 0%,#070C16 55%,#0B111E 100%);
+  box-shadow:0 40px 80px -40px rgba(7,12,22,.85), 0 0 0 1px rgba(214,178,106,.22);
+  overflow:hidden;cursor:grab;touch-action:pan-y;
+}
+.mcard:active{cursor:grabbing}
+.mcard__frame{position:absolute;inset:12px;border:1px solid rgba(214,178,106,.3);border-radius:10px;pointer-events:none;z-index:4}
+.mcard__frame::before,.mcard__frame::after{
+  content:"";position:absolute;width:20px;height:20px;border:1.5px solid var(--gold);
+}
+.mcard__frame::before{top:-1px;left:-1px;border-right:0;border-bottom:0;border-radius:8px 0 0 0}
+.mcard__frame::after{bottom:-1px;right:-1px;border-left:0;border-top:0;border-radius:0 0 8px 0}
+.mcard__shine{position:absolute;inset:0;z-index:5;pointer-events:none;opacity:0;transition:opacity .4s;mix-blend-mode:soft-light}
+.mcard__holo{position:absolute;inset:0;z-index:6;pointer-events:none;opacity:0;mix-blend-mode:color-dodge;transition:opacity .4s}
+.mcard__grain{
+  position:absolute;inset:0;z-index:3;pointer-events:none;opacity:.35;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+}
+.mcard__in{
+  position:relative;z-index:2;height:100%;display:grid;
+  grid-template-columns:1fr auto;gap:1rem;align-items:center;
+  padding:clamp(1.4rem,4.2%,2.4rem) clamp(1.4rem,4.5%,2.6rem);
+}
+.mcard__l{min-width:0}
+.mcard__kicker{font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:.7rem}
+.mcard__type{font-family:var(--font-display);font-size:clamp(.82rem,2.1vw,1rem);letter-spacing:.06em;text-transform:uppercase;color:var(--on-night-2);margin-bottom:.35rem}
+.mcard__name{font-family:var(--font-display);font-weight:500;font-size:clamp(1.25rem,4.4vw,2.1rem);color:#fff;line-height:1.15;letter-spacing:-.01em;overflow-wrap:anywhere}
+.mcard__heb{font-family:var(--font-hebrew);direction:rtl;text-align:left;font-size:clamp(.95rem,3vw,1.4rem);color:var(--gold-bright);margin-top:.5rem;line-height:1.5;text-shadow:0 0 20px rgba(240,210,148,.3);overflow-wrap:anywhere}
+.mcard__ft{margin-top:clamp(.7rem,2.5%,1.2rem);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--on-night-3)}
+
+@media (max-width:560px){          /* give the card room to breathe on a phone */
+  .mcard{aspect-ratio:4/3.15}
+  .mcard__kicker{font-size:.5rem;letter-spacing:.16em;margin-bottom:.5rem}
+  .mcard__ft{font-size:.53rem;letter-spacing:.1em}
+  .mcard__in{gap:.6rem}
+}
+
+.candle{position:relative;width:clamp(34px,7vw,48px);height:clamp(96px,22vw,150px);flex:none;align-self:center}
+.candle__body{
+  position:absolute;bottom:0;left:0;right:0;height:100%;border-radius:5px 5px 3px 3px;
+  background:linear-gradient(90deg,rgba(226,214,190,.85) 0%,#FFFDF6 38%,#FFF8E8 62%,rgba(214,200,175,.8) 100%);
+  box-shadow:0 0 24px rgba(255,220,160,.25), inset 0 -14px 20px -12px rgba(140,110,60,.5);
+}
+.candle__body::after{                /* melted rim catching the flame */
+  content:"";position:absolute;inset:0 0 auto 0;height:22%;border-radius:5px 5px 0 0;
+  background:linear-gradient(180deg,rgba(255,214,150,.8),rgba(255,214,150,0));
+}
+.candle__wick{position:absolute;top:-9px;left:50%;transform:translateX(-50%);width:2px;height:11px;background:#2A2118;border-radius:2px;z-index:2}
+.candle__flame{
+  position:absolute;top:-40px;left:50%;width:17px;height:38px;
+  transform:translateX(-50%);transform-origin:50% 100%;z-index:3;
+  border-radius:50% 50% 40% 40% / 62% 62% 38% 38%;
+  background:radial-gradient(ellipse at 50% 78%, #FFFFFF 0%, #FFF0C0 22%, var(--flame-hot) 42%, var(--flame) 68%, rgba(232,106,44,.35) 92%, transparent 100%);
+  box-shadow:0 0 24px rgba(255,180,90,.85), 0 0 60px rgba(255,140,50,.5);
+  animation:flame 3.4s infinite ease-in-out;
+}
+.candle__glow{
+  position:absolute;top:-92px;left:50%;transform:translateX(-50%);width:190px;height:190px;z-index:1;
+  background:radial-gradient(circle, rgba(255,190,110,.28) 0%, rgba(255,150,70,.12) 38%, transparent 68%);
+  animation:glow 3.4s infinite ease-in-out;pointer-events:none;
+}
+@keyframes flame{
+  0%,100%{transform:translateX(-50%) scaleY(1) skewX(0deg);opacity:1}
+  20%{transform:translateX(-51%) scaleY(1.09) skewX(-2deg);opacity:.93}
+  45%{transform:translateX(-49%) scaleY(.94) skewX(2deg);opacity:1}
+  70%{transform:translateX(-50.5%) scaleY(1.05) skewX(-1deg);opacity:.96}
+}
+@keyframes glow{0%,100%{opacity:.55;transform:translateX(-50%) scale(1)}50%{opacity:.85;transform:translateX(-50%) scale(1.09)}}
+.tilt-hint{text-align:center;font-size:.74rem;color:var(--ink-3);margin-top:.9rem}
+
+/* ============================================================
+   SOURCES
+   ============================================================ */
+.sources{background:var(--paper-2)}
+.src{
+  position:relative;padding:1.9rem 1.7rem 1.7rem;border-radius:16px;background:var(--paper);
+  border:1px solid var(--rule-soft);margin-bottom:1.1rem;overflow:hidden;
+  transition:transform .4s var(--ease),box-shadow .4s var(--ease);
+}
+.src:hover{transform:translateY(-3px);box-shadow:var(--shadow-2)}
+.src::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--gold-bright),var(--gold-deep))}
+.src__q{font-family:var(--font-display);font-size:clamp(1.15rem,2.6vw,1.45rem);line-height:1.45;color:var(--ink);font-style:italic}
+.src__heb{font-family:var(--font-hebrew);direction:rtl;font-size:1.25rem;color:var(--gold-deep);margin-bottom:.7rem;font-weight:500}
+.src__cite{margin-top:.7rem;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
+.src__body{margin-top:1rem;color:var(--ink-2);font-size:.955rem;line-height:1.75}
+
+/* ============================================================
+   GALLERY
+   ============================================================ */
+.gallery{background:var(--paper-sunk);display:none}
+.gallery.ready{display:block}
+.slides{position:relative;border-radius:18px;overflow:hidden;background:#0A101C;box-shadow:var(--shadow-2);aspect-ratio:16/10}
+@media (min-width:760px){.slides{aspect-ratio:16/8}}
+.slides img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.06);transition:opacity 1s var(--ease),transform 6s linear}
+.slides img.on{opacity:1;transform:scale(1)}
+.slides__nav{position:absolute;inset:auto 0 0 0;display:flex;align-items:center;justify-content:space-between;padding:1rem;z-index:3;
+  background:linear-gradient(0deg,rgba(7,12,22,.75),transparent)}
+.sbtn{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.14);color:#fff;backdrop-filter:blur(6px);transition:background .25s,transform .25s}
+.sbtn:hover{background:rgba(255,255,255,.28);transform:scale(1.08)}
+.dots{display:flex;gap:.4rem}
+.dots button{width:7px;height:7px;border-radius:99px;background:rgba(255,255,255,.35);transition:all .3s var(--ease)}
+.dots button[aria-current="true"]{width:22px;background:var(--gold-bright)}
+
+/* ============================================================
+   IMPACT
+   ============================================================ */
+.impact__grid{display:grid;gap:1rem;margin-top:2.6rem}
+@media (min-width:720px){.impact__grid{grid-template-columns:repeat(2,1fr)}}
+.imp{display:flex;gap:1rem;padding:1.4rem 1.35rem;border-radius:14px;background:var(--paper-2);border:1px solid var(--rule-soft);transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
+.imp:hover{transform:translateY(-3px);box-shadow:var(--shadow-1)}
+.imp__n{font-family:var(--font-display);font-size:1.6rem;color:var(--gold-deep);line-height:1;flex:none;width:34px;font-weight:600}
+.imp h4{font-size:1.06rem;font-family:var(--font-body);font-weight:600;margin-bottom:.25rem}
+.imp p{font-size:.9rem;color:var(--ink-2);line-height:1.65}
+
+/* ============================================================
+   TIERS
+   ============================================================ */
+.tiers{background:radial-gradient(115% 75% at 50% 0%, #16243B 0%, #0A101C 60%, #070C16 100%);color:var(--on-night)}
+.tier__grid{display:grid;gap:1.1rem;margin-top:2.8rem}
+@media (min-width:880px){.tier__grid{grid-template-columns:repeat(3,1fr);align-items:stretch}}
+.tier{
+  position:relative;display:flex;flex-direction:column;
+  background:linear-gradient(170deg,rgba(255,255,255,.065),rgba(255,255,255,.018));
+  border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:1.8rem 1.6rem;
+  transition:transform .4s var(--ease),border-color .4s,box-shadow .4s;
+}
+.tier:hover{transform:translateY(-6px);border-color:rgba(214,178,106,.45);box-shadow:0 30px 60px -35px #000,var(--glow)}
+.tier--star{border-color:rgba(214,178,106,.5);background:linear-gradient(170deg,rgba(214,178,106,.14),rgba(214,178,106,.03))}
+.tier__tag{position:absolute;top:-11px;left:50%;transform:translateX(-50%);padding:.3rem .85rem;border-radius:99px;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;font-weight:700;background:linear-gradient(150deg,var(--gold-bright),var(--gold));color:#231705;white-space:nowrap}
+.tier h3{font-size:1.5rem;color:#fff}
+.tier__heb{font-family:var(--font-hebrew);direction:rtl;font-size:1rem;color:var(--gold);margin-top:.15rem}
+.tier__price{font-family:var(--font-display);font-size:clamp(2rem,5vw,2.5rem);font-weight:600;color:var(--gold-bright);margin:.9rem 0 .2rem;line-height:1}
+.tier__per{font-size:.75rem;color:var(--on-night-3);letter-spacing:.06em}
+.tier ul{list-style:none;margin:1.4rem 0 0;padding:0;display:flex;flex-direction:column;gap:.7rem;flex:1}
+.tier li{display:flex;gap:.65rem;font-size:.9rem;color:var(--on-night-2);line-height:1.55}
+.tier li svg{width:16px;height:16px;flex:none;margin-top:.2rem;color:var(--gold)}
+.tier .btn{margin-top:1.6rem}
+.tiers__note{text-align:center;margin-top:2rem;font-size:.85rem;color:var(--on-night-3)}
+
+/* ============================================================
+   FAQ
+   ============================================================ */
+.faq{background:var(--paper-2)}
+.qa{border-bottom:1px solid var(--rule-soft)}
+.qa summary{
+  list-style:none;cursor:pointer;padding:1.25rem 2.5rem 1.25rem 0;position:relative;
+  font-family:var(--font-display);font-size:clamp(1.08rem,2.4vw,1.3rem);font-weight:500;
+}
+.qa summary::-webkit-details-marker{display:none}
+.qa summary::after{
+  content:"";position:absolute;right:.4rem;top:50%;width:9px;height:9px;
+  border-right:1.5px solid var(--gold-deep);border-bottom:1.5px solid var(--gold-deep);
+  transform:translateY(-70%) rotate(45deg);transition:transform .3s var(--ease);
+}
+.qa[open] summary::after{transform:translateY(-25%) rotate(-135deg)}
+.qa__a{padding:0 0 1.4rem;color:var(--ink-2);font-size:.95rem;line-height:1.75;max-width:70ch}
+
+/* ============================================================
+   CTA + FOOTER
+   ============================================================ */
+.finale{
+  position:relative;overflow:hidden;text-align:center;
+  background:radial-gradient(100% 100% at 50% 0%, #1D3055 0%, #0B1424 55%, #070C16 100%);
+  color:var(--on-night);
+}
+.finale h2{font-size:clamp(2.2rem,6vw,3.6rem);font-weight:500}
+.finale .heb{font-size:clamp(1.2rem,3vw,1.7rem);color:var(--gold-bright);margin-bottom:1rem}
+.finale .btn{margin-top:2rem}
+
+footer{background:#050910;color:var(--on-night-3);padding-block:3.5rem 2.5rem;font-size:.9rem}
+.foot{display:grid;gap:2.2rem}
+@media (min-width:780px){.foot{grid-template-columns:1.3fr 1fr 1fr}}
+footer h4{font-family:var(--font-body);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:1rem}
+footer ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.6rem}
+footer a:hover{color:var(--gold-bright)}
+.foot__c{display:flex;gap:.65rem;align-items:flex-start}
+.foot__c svg{width:16px;height:16px;flex:none;margin-top:.25rem;color:var(--gold-deep)}
+.foot__b{margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.07);display:flex;flex-wrap:wrap;gap:.8rem;justify-content:space-between;font-size:.78rem}
+
+/* toast */
+.toast{
+  position:fixed;left:50%;bottom:24px;transform:translate(-50%,140%);z-index:200;
+  background:var(--ink);color:#fff;padding:.85rem 1.3rem;border-radius:12px;font-size:.88rem;
+  box-shadow:0 20px 50px -20px rgba(0,0,0,.6);transition:transform .5s var(--ease);
+  max-width:calc(100vw - 2rem);text-align:center;border:1px solid rgba(214,178,106,.35);
+}
+.toast.show{transform:translate(-50%,0)}
+
+/* sticky mobile cta */
+.dock{
+  position:fixed;left:0;right:0;bottom:0;z-index:70;padding:.7rem var(--pad) calc(.7rem + env(safe-area-inset-bottom));
+  background:rgba(7,12,22,.9);backdrop-filter:blur(14px);border-top:1px solid rgba(214,178,106,.2);
+  transform:translateY(120%);transition:transform .45s var(--ease);
+}
+.dock.show{transform:none}
+@media (min-width:920px){.dock{display:none}}
+</style>
+</head>
+<script>document.documentElement.className+=" js";</script>
+<body>
+
+<!-- ══════════════ NAV ══════════════ -->
+<header class="nav" id="nav">
+  <div class="wrap">
+    <div class="nav__bar">
+      <a class="brand" href="#top">
+        <span class="brand__txt">
+          <b>YC Learning Program</b>
+          <small>Elul 5786</small>
+        </span>
+      </a>
+      <nav class="nav__links">
+        <a href="#elul">Why Elul</a>
+        <a href="#board">The Board</a>
+        <a href="#card">Your Dedication</a>
+        <a href="#sources">Sources</a>
+        <a href="#tiers">Sponsor</a>
+      </nav>
+      <a class="btn btn--gold" href="#tiers" style="display:none" id="navCta">Sponsor a Seder</a>
+      <button class="burger" id="burger" aria-expanded="false" aria-controls="mobileMenu" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <div class="mobile" id="mobileMenu" aria-hidden="true">
+    <div class="mobile__in">
+      <div class="wrap">
+        <nav>
+          <a href="#elul">Why Elul</a>
+          <a href="#board">The Board</a>
+          <a href="#card">Your Dedication</a>
+          <a href="#sources">Sources</a>
+          <a href="#impact">Impact</a>
+          <a href="#tiers">Sponsor</a>
+          <a class="btn btn--gold" href="#tiers">Sponsor a Seder</a>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <div class="progress" id="progress"></div>
+</header>
+
+<!-- ══════════════ HERO ══════════════ -->
+<section class="hero" id="top">
+  <canvas id="embers" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <div class="hero__grid">
+      <div>
+        <p class="hero__heb rv">אֲנִי לְדוֹדִי <b>וְדוֹדִי לִי</b></p>
+        <h1 class="hero__h rv">Twenty-nine days.<br>Weekday sedarim.<br><em>One name at a time.</em></h1>
+        <p class="hero__sub rv">This Elul, the Beit Midrash doesn't go quiet. Sponsor a seder of learning and a name is placed on the shtender — carried by boys who are actually learning, for someone you actually love.</p>
+        <div class="hero__cta rv">
+          <a class="btn btn--gold btn--lg" href="#board">Choose a day</a>
+          <a class="btn btn--ghost btn--lg" href="#card">Make your dedication card</a>
+        </div>
+        <p class="hero__note rv"><span class="dot"></span> <span id="liveNote">The Beit Midrash is open</span></p>
+      </div>
+
+      <aside class="count rv" aria-label="Countdown to Rosh Hashana">
+        <div class="count__top">
+          <span class="count__label">Until Rosh Hashana 5787</span>
+          <span class="count__heb">רֹאשׁ הַשָּׁנָה</span>
+        </div>
+        <div class="count__grid" id="countdown">
+          <div class="count__cell"><div class="count__n" id="cd-d">—</div><div class="count__u">Days</div></div>
+          <div class="count__cell"><div class="count__n" id="cd-h">—</div><div class="count__u">Hours</div></div>
+          <div class="count__cell"><div class="count__n" id="cd-m">—</div><div class="count__u">Min</div></div>
+          <div class="count__cell"><div class="count__n" id="cd-s">—</div><div class="count__u">Sec</div></div>
+        </div>
+        <div class="meter">
+          <div class="meter__head">
+            <span>Sedarim sponsored</span>
+            <span><b id="meterN">0</b> of <span id="meterT">36</span></span>
+          </div>
+          <div class="meter__track"><div class="meter__fill" id="meterFill"></div></div>
+        </div>
+      </aside>
+    </div>
+
+    <div class="stats rv">
+      <div class="stat"><b data-count="10000" data-suffix="+">0</b><span>Mishnayot learnt</span></div>
+      <div class="stat"><b data-count="1000" data-suffix="+">0</b><span>Blatt of Gemara completed</span></div>
+      <div class="stat"><b data-count="8000" data-suffix="+">0</b><span>Perakim of Tanach studied</span></div>
+      <div class="stat"><b data-count="29" data-suffix="">0</b><span>Days of Elul learning</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ WHY ELUL ══════════════ -->
+<section class="sec field" id="elul">
+  <div class="wrap">
+    <div class="field__grid">
+      <div class="rv">
+        <p class="eyebrow">The month of Elul</p>
+        <p class="pull">
+          <span class="heb">הַמֶּלֶךְ בַּשָּׂדֶה</span>
+          The King is in the field — and He is close enough to speak to.
+        </p>
+      </div>
+      <div class="field__body rv">
+        <p>The Alter Rebbe's mashal is famous for a reason. All year the King sits in His palace, behind gates and protocol. In Elul He walks out into the field, and anyone — in work clothes, mid-harvest, unprepared — can come over and be received with a smile.</p>
+        <p>Which is exactly why Elul learning carries what it carries. Torah learned in these twenty-nine days is learned while the gates are open. When that learning is dedicated in someone's name, the merit is credited to them: <em>an aliyah for a neshama, a zechut for a refuah, a foundation under a simcha.</em></p>
+        <p>Our talmidim are in the Beit Midrash through Elul: morning seder from Monday to Friday, and night seder from Monday to Thursday. Every real learning slot can carry a name.</p>
+      </div>
+    </div>
+
+    <div class="cards">
+      <article class="card rv">
+        <div class="card__ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.25v13M12 6.25C10.83 5.48 9.25 5 7.5 5S4.17 5.48 3 6.25v13C4.17 18.48 5.75 18 7.5 18s3.33.48 4.5 1.25m0-13C13.17 5.48 14.75 5 16.5 5S19.83 5.48 21 6.25v13C19.83 18.48 18.25 18 16.5 18s-3.33.48-4.5 1.25"/></svg>
+        </div>
+        <h3>Iluy Neshama</h3>
+        <p class="heb">לְעִלּוּי נִשְׁמַת</p>
+        <p>For someone who has passed. Their name is learned with, and the merit rises to them — an aliyah they can no longer earn for themselves.</p>
+      </article>
+      <article class="card rv">
+        <div class="card__ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 8.6a5.5 5.5 0 0 0-9.3-3A5.5 5.5 0 0 0 2.2 8.6c0 5.2 6.4 8.9 9.3 11 2.9-2.1 9.3-5.8 9.3-11Z"/></svg>
+        </div>
+        <h3>Refuah Shleimah</h3>
+        <p class="heb">לִרְפוּאָה שְׁלֵמָה</p>
+        <p>For someone who is ill. The name goes up before the seder and the boys have them in mind — a full recovery, in body and in spirit.</p>
+      </article>
+      <article class="card rv">
+        <div class="card__ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 2.6 5.9 6.4.6-4.8 4.3 1.4 6.3L12 16.8 6.4 20.1l1.4-6.3L3 9.5l6.4-.6L12 3Z"/></svg>
+        </div>
+        <h3>Simcha &amp; Hatzlacha</h3>
+        <p class="heb">לִכְבוֹד · לְהַצְלָחַת</p>
+        <p>A bar mitzvah, an anniversary, a yahrzeit, a new beginning. Mark it with the one gift that keeps producing merit long after the day.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ THE BOARD ══════════════ -->
+<section class="sec board" id="board">
+  <div class="wrap">
+    <div class="board__head">
+      <div class="rv">
+        <p class="eyebrow">The Elul board</p>
+        <h2 class="big">Pick a real learning slot.</h2>
+        <p class="lede">Morning seder runs Monday to Friday. Night seder runs Monday to Thursday. Tap a day to see what's scheduled, what's open, and who is being learned for.</p>
+      </div>
+      <div class="legend rv">
+        <span><i class="l-open"></i>Open</span>
+        <span><i class="l-taken"></i>Sponsored</span>
+        <span><i class="l-today"></i>Today</span>
+      </div>
+    </div>
+
+    <div class="grid29 rv" id="grid29" role="list"></div>
+    <p class="board__foot" id="boardFoot"></p>
+  </div>
+</section>
+
+<dialog class="sheet" id="daySheet" aria-labelledby="sheetTitle">
+  <div class="sheet__in" style="position:relative">
+    <button class="sheet__x" id="sheetX" aria-label="Close">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+    <div class="sheet__hd">
+      <div class="sheet__badge"><span id="sheetHeb">א</span></div>
+      <div>
+        <h3 id="sheetTitle">1 Elul</h3>
+        <small id="sheetDate">Friday, 14 August 2026</small>
+      </div>
+    </div>
+    <div id="sheetSlots"></div>
+  </div>
+</dialog>
+
+<dialog class="pay-modal" id="payDialog" aria-labelledby="payDialogTitle">
+  <div class="pay-modal__in">
+    <button class="pay-modal__x" id="payDialogX" type="button" aria-label="Close payment popup">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+    <h3 id="payDialogTitle">Secure payment</h3>
+    <p>This opens WalletDoc in a new tab. Use the reference below so the Foundation can match the payment to your sponsorship.</p>
+    <div class="pay__ref">
+      <small>Reference</small>
+      <b id="payDialogRef">Your Name + Kfar 2026</b>
+    </div>
+    <a class="pay-modal__url" id="payDialogRaw" href="https://walletdoc.com/pay/YCFoundation" target="_blank" rel="noopener">https://walletdoc.com/pay/YCFoundation</a>
+    <div class="pay-modal__actions">
+      <a class="btn btn--gold" id="payDialogLink" href="https://walletdoc.com/pay/YCFoundation" target="_blank" rel="noopener">Open WalletDoc</a>
+      <button class="btn btn--ink" id="payDialogClose" type="button">Stay here</button>
+    </div>
+  </div>
+</dialog>
+
+<!-- ══════════════ CARD BUILDER ══════════════ -->
+<section class="sec builder" id="card">
+  <div class="wrap">
+    <div class="rv" style="text-align:center;max-width:720px;margin-inline:auto">
+      <p class="eyebrow center">Your dedication</p>
+      <h2 class="big">Write the name. Watch the card light up.</h2>
+      <p class="lede" style="margin-inline:auto">This is the card that goes on the shtender — printed and placed in front of the boys learning that seder. Build it here, download it, keep it.</p>
+    </div>
+
+    <div class="builder__grid">
+      <form class="form rv" id="cardForm" novalidate>
+        <div class="f">
+          <label for="fType">Dedication type</label>
+          <div class="seg" id="segType" role="group" aria-label="Dedication type">
+            <button type="button" data-type="iluy" aria-pressed="true">In memory</button>
+            <button type="button" data-type="refuah" aria-pressed="false">Refuah</button>
+            <button type="button" data-type="kavod" aria-pressed="false">In honour</button>
+            <button type="button" data-type="hatzlacha" aria-pressed="false">Hatzlacha</button>
+            <button type="button" data-type="other" aria-pressed="false">Other</button>
+          </div>
+          <input type="hidden" id="fType" value="iluy">
+          <div id="otherWrap" hidden style="margin-top:.7rem">
+            <label for="fOther" style="font-size:.72rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:.45rem">How should the card read?</label>
+            <input id="fOther" type="text" placeholder="In gratitude for" maxlength="40" autocomplete="off">
+          </div>
+        </div>
+
+        <div class="f">
+          <label for="fName">Name (English)</label>
+          <input id="fName" type="text" placeholder="Name for the dedication" autocomplete="off" maxlength="60">
+          <p class="f__hint">Hebrew name with ben / bat, as you'd give it for a Mi Shebeirach.</p>
+        </div>
+
+        <div class="f">
+          <label for="fHeb">Name (Hebrew) — optional</label>
+          <input id="fHeb" type="text" class="heb" placeholder="שם בעברית" autocomplete="off" maxlength="60" dir="rtl" lang="he">
+          <p class="f__hint">Leave blank and the card shows the English only.</p>
+        </div>
+
+        <div class="f">
+          <label for="fFrom">Sponsored by — optional</label>
+          <input id="fFrom" type="text" placeholder="By his children and grandchildren" autocomplete="off" maxlength="48">
+        </div>
+
+        <div class="f">
+          <label for="fYartzeit">Hebrew date — optional</label>
+          <input id="fYartzeit" type="text" placeholder="e.g. 12 Sivan — the yartzeit" autocomplete="off" maxlength="40">
+          <p class="f__hint">The yartzeit or occasion this marks, if there is one. Separate from the day you're sponsoring below.</p>
+        </div>
+
+        <div class="f">
+          <label class="check">
+            <input type="checkbox" id="fAnon">
+            <span>Keep this anonymous — show the dedication on the board, but not who gave it.</span>
+          </label>
+        </div>
+
+        <p class="sep">Which seder</p>
+
+        <div class="f--row">
+          <div class="f">
+            <label for="fDay">Day of Elul</label>
+            <select id="fDay"></select>
+          </div>
+          <div class="f">
+            <label for="fSeder">Seder</label>
+            <select id="fSeder">
+              <option value="morning">Morning seder · 7:30</option>
+              <option value="night">Night seder · 17:30</option>
+              <option value="both">Both — the full day</option>
+            </select>
+          </div>
+        </div>
+        <p class="f__hint" id="dayHint"></p>
+
+        <p class="sep">Your details</p>
+
+        <div class="f--row">
+          <div class="f">
+            <label for="fSponsorName">Your name</label>
+            <input id="fSponsorName" type="text" autocomplete="name" maxlength="60" required>
+          </div>
+          <div class="f">
+            <label for="fAmount">Amount (R)</label>
+            <input id="fAmount" type="number" min="0" step="10" inputmode="numeric" placeholder="360">
+          </div>
+        </div>
+
+        <div class="f--row" style="margin-top:.9rem">
+          <div class="f">
+            <label for="fEmail">Email</label>
+            <input id="fEmail" type="email" autocomplete="email" maxlength="120" required>
+          </div>
+          <div class="f">
+            <label for="fPhone">Phone</label>
+            <input id="fPhone" type="tel" autocomplete="tel" maxlength="30" required>
+          </div>
+        </div>
+
+        <div class="hp" aria-hidden="true">
+          <label for="fWebsite">Leave this empty</label>
+          <input id="fWebsite" type="text" tabindex="-1" autocomplete="off">
+        </div>
+
+        <p class="pledge" id="pledge"></p>
+
+        <div class="pay pay--before" id="payBefore" hidden>
+          <div class="pay__hd">
+            <span>Payment details</span>
+            <button type="button" id="btnCopyBankBefore">Copy details</button>
+          </div>
+          <p class="pay__intro">Reserve your seder first so the date is locked in, then pay by EFT or the secure payment link.</p>
+          <dl class="pay__box" id="payBeforeBox"></dl>
+          <div class="pay__ref">
+            <small>Reference</small>
+            <b id="payBeforeRef">Your Name + Kfar 2026</b>
+          </div>
+          <p class="pay__why">Please use that reference exactly — it is how the Foundation matches your payment to your sponsorship.</p>
+          <div class="pay__actions">
+            <a class="btn btn--ink" id="btnPayBefore" href="#" target="_blank" rel="noopener" aria-haspopup="dialog">Secure payment link</a>
+          </div>
+        </div>
+
+        <div class="form__actions">
+          <button type="button" class="btn btn--ink" id="btnDownload">Download card</button>
+          <button type="submit" class="btn btn--gold" id="btnSubmit">Reserve this seder</button>
+        </div>
+        <p class="f__hint" style="margin-top:.9rem" id="payNote">Nothing is charged inside this form. Payment details are shown above and again after your booking is reserved.</p>
+        <p class="status" id="formStatus" role="alert"></p>
+      </form>
+
+      <div class="form rv" id="donePanel" hidden>
+        <div class="done">
+          <div class="done__tick" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>
+          </div>
+          <h3>The seder is yours.</h3>
+          <p class="heb">תִּזְכּוּ לְמִצְווֹת</p>
+          <div class="done__slot" id="doneSlot"></div>
+          <p id="doneMsg"></p>
+
+          <div class="pay" id="payBlock" hidden>
+            <div class="pay__hd">
+              <span>How to pay</span>
+              <button type="button" id="btnCopyBank">Copy details</button>
+            </div>
+            <dl class="pay__box" id="payBox"></dl>
+            <div class="pay__ref">
+              <small>Use this as your reference</small>
+              <b id="payRef">—</b>
+            </div>
+            <p class="pay__why">Please use that reference exactly — it's how the Foundation matches your payment. Your booking is <b id="payBooking">—</b>, quote it if you need to ask us anything.</p>
+          </div>
+
+          <div class="done__actions">
+            <a class="btn btn--gold" id="btnPay" href="#" target="_blank" rel="noopener" aria-haspopup="dialog">Pay by card</a>
+            <button type="button" class="btn btn--ink" id="btnDownload2">Download card</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="rv">
+        <div class="stage">
+          <div class="mcard" id="mcard">
+            <div class="mcard__grain"></div>
+            <div class="mcard__shine" id="mShine"></div>
+            <div class="mcard__holo" id="mHolo"></div>
+            <div class="mcard__frame"></div>
+            <div class="mcard__in">
+              <div class="mcard__l">
+                <p class="mcard__kicker">YC Learning Program · Elul 5786</p>
+                <p class="mcard__type" id="mType">In memory of</p>
+                <p class="mcard__name" id="mName">Name for the dedication</p>
+                <p class="mcard__heb" id="mHeb">השם יופיע כאן</p>
+                <p class="mcard__ft" id="mFrom">Today's learning is dedicated in their name</p>
+              </div>
+              <div class="candle" aria-hidden="true">
+                <div class="candle__glow"></div>
+                <div class="candle__flame"></div>
+                <div class="candle__wick"></div>
+                <div class="candle__body"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="tilt-hint">Move your cursor across the card — or tilt your phone.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ SOURCES ══════════════ -->
+<section class="sec sources" id="sources">
+  <div class="wrap narrow">
+    <div class="rv" style="text-align:center;margin-bottom:2.6rem">
+      <p class="eyebrow center">Why it works</p>
+      <h2 class="big">Not a gesture. A mechanism.</h2>
+      <p class="lede" style="margin-inline:auto">Chazal are specific about what learning in someone's name does. Three sources worth sitting with.</p>
+    </div>
+
+    <article class="src rv">
+      <p class="src__heb">כָּל תַּלְמִיד חָכָם שֶׁאוֹמְרִים דְּבַר שְׁמוּעָה מִפִּיו — שִׂפְתוֹתָיו דּוֹבְבוֹת בַּקֶּבֶר</p>
+      <p class="src__q">"When a teaching is said in the name of one who has passed, his lips move with us in the grave."</p>
+      <p class="src__cite">Yevamot 97a</p>
+      <p class="src__body">Not metaphor — mechanism. The learning doesn't merely honour them; it includes them. They are still, in the only way that matters, in the Beit Midrash.</p>
+    </article>
+
+    <article class="src rv">
+      <p class="src__heb">בְּרָא מְזַכֶּה אַבָּא</p>
+      <p class="src__q">"A child brings merit to a parent."</p>
+      <p class="src__cite">Sanhedrin 104a</p>
+      <p class="src__body">The merit of Torah moves upward through relationship. A sponsorship extends that chain: your name, your intention, their aliyah — carried by boys who will never meet them.</p>
+    </article>
+
+    <article class="src rv">
+      <p class="src__heb">וְתַלְמוּד תּוֹרָה כְּנֶגֶד כֻּלָּם</p>
+      <p class="src__q">"And the study of Torah is equal to them all."</p>
+      <p class="src__cite">Mishnah Peah 1:1</p>
+      <p class="src__body">Of everything you could give in someone's name, the Mishnah puts this one on its own line. It is the merit that keeps producing after the giving stops.</p>
+    </article>
+  </div>
+</section>
+
+<!-- ══════════════ GALLERY ══════════════ -->
+<section class="sec gallery" id="gallery">
+  <div class="wrap">
+    <div class="rv" style="text-align:center;margin-bottom:2.2rem">
+      <p class="eyebrow center">In the Beit Midrash</p>
+      <h2 class="big">This is what you're sponsoring.</h2>
+    </div>
+    <div class="slides rv" id="slides">
+      <div class="slides__nav">
+        <button class="sbtn" id="prevSlide" aria-label="Previous">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
+        <div class="dots" id="dots"></div>
+        <button class="sbtn" id="nextSlide" aria-label="Next">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ IMPACT ══════════════ -->
+<section class="sec field" id="impact">
+  <div class="wrap">
+    <div class="rv" style="max-width:720px">
+      <p class="eyebrow">Where it goes</p>
+      <h2 class="big">Your sponsorship does two jobs at once.</h2>
+      <p class="lede">It carries a name — and it funds the thing that carries it. Every rand goes into the learning programme and the Kfar trip that grows out of it.</p>
+    </div>
+
+    <div class="impact__grid">
+      <div class="imp rv"><span class="imp__n">01</span><div><h4>Keeps the sedarim running</h4><p>Seforim, mekorot sheets, night seder refreshments, and the incentives that get boys back in their seats at 8pm.</p></div></div>
+      <div class="imp rv"><span class="imp__n">02</span><div><h4>Sends boys to Kfar</h4><p>Subsidises the trip that connects our talmidim to their eternal homeland — for many, the first time they daven at the Kotel.</p></div></div>
+      <div class="imp rv"><span class="imp__n">03</span><div><h4>Exposes them to real yeshiva learning</h4><p>Chavruta, iyun, a rebbe who knows their name. The kind of learning you can only meet in person.</p></div></div>
+      <div class="imp rv"><span class="imp__n">04</span><div><h4>Learns in yeshivot in Israel</h4><p>The programme brings boys into real yeshiva learning in Israel — a serious environment, serious expectations, and Torah learned in the place it comes alive.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ TIERS ══════════════ -->
+<section class="sec tiers" id="tiers">
+  <div class="wrap">
+    <div class="rv" style="text-align:center;max-width:720px;margin-inline:auto">
+      <p class="eyebrow center">Sponsorship</p>
+      <h2 class="big">Choose what you can carry.</h2>
+      <p class="lede" style="margin-inline:auto">Every level puts a printed card with your dedication on the shtenders and announces it before the seder.</p>
+    </div>
+
+    <div class="tier__grid">
+      <article class="tier rv">
+        <h3>One Seder</h3>
+        <p class="tier__heb">סֵדֶר אֶחָד</p>
+        <p class="tier__price">R360</p>
+        <p class="tier__per">Recommended amount · morning or night</p>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>One seder of dedicated learning</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>Printed dedication cards on the shtenders</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>Announcement before learning begins</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>Your name on the Elul board</li>
+        </ul>
+        <a class="btn btn--ghost btn--block" href="#board">Sponsor a seder</a>
+      </article>
+
+      <article class="tier tier--star rv">
+        <span class="tier__tag">Most chosen</span>
+        <h3>A Full Day</h3>
+        <p class="tier__heb">יוֹם שָׁלֵם</p>
+        <p class="tier__price">R1 800</p>
+        <p class="tier__per">Recommended amount · Monday-Thursday morning &amp; night seder · a whole day in their name</p>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>Both sedarim, start to finish</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>Dedication cards at every shtender, both sedarim</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>Special announcement &amp; dedication</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>Ideal for a yahrzeit or a birthday</li>
+        </ul>
+        <a class="btn btn--gold btn--block" href="#board">Sponsor a day</a>
+      </article>
+
+      <article class="tier rv">
+        <h3>A Full Week</h3>
+        <p class="tier__heb">שָׁבוּעַ שָׁלֵם</p>
+        <p class="tier__price">R5 400</p>
+        <p class="tier__per">Recommended amount · 5 morning sedarim · 4 night sedarim</p>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>A full week of dedicated learning</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>Meals &amp; refreshments for the boys</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>Special learning materials in their name</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>Featured placement on the Elul board</li>
+        </ul>
+        <a class="btn btn--ghost btn--block" href="#card">Sponsor a week</a>
+      </article>
+    </div>
+    <p class="tiers__note">These are recommended amounts. Any sponsorship, at any size, is received with enormous gratitude — and gets the same card on the shtender.</p>
+  </div>
+</section>
+
+<!-- ══════════════ FAQ ══════════════ -->
+<section class="sec faq">
+  <div class="wrap narrow">
+    <div class="rv" style="margin-bottom:1.6rem">
+      <p class="eyebrow">Questions</p>
+      <h2 class="big">Before you sponsor.</h2>
+    </div>
+
+    <details class="qa rv"><summary>Do the boys actually know whose name they're learning for?</summary>
+      <div class="qa__a">Yes. Printed cards go on the shtenders before the seder starts, and the dedication is announced. It isn't a line in a newsletter — it's in front of them while they learn.</div></details>
+
+    <details class="qa rv"><summary>What if I don't know the Hebrew name?</summary>
+      <div class="qa__a">Give us the English and whatever you have. If it's for a refuah, the custom is the person's name and their mother's name; for an iluy neshama it's the name and the father's. If you're unsure, send what you know and we'll help you get it right.</div></details>
+
+    <details class="qa rv"><summary>Can I sponsor a specific date — a yahrzeit or birthday?</summary>
+      <div class="qa__a">That's exactly what the board is for. Pick the day, and if the seder is already taken we'll find you the closest one and tell you before anything is processed.</div></details>
+
+    <details class="qa rv"><summary>Can I sponsor anonymously?</summary>
+      <div class="qa__a">Of course. The dedication goes up; your name doesn't have to. Just say so on the form.</div></details>
+
+    <details class="qa rv"><summary>Is there a minimum?</summary>
+      <div class="qa__a">No. The amounts listed are what a seder, a day and a week cost us to run well. Anything given in a name is meaningful, and every sponsor gets the same card and the same announcement.</div></details>
+
+    <details class="qa rv"><summary>What happens after I submit the form?</summary>
+      <div class="qa__a">You'll get a confirmation with the exact date and seder you've been allocated, and a copy of your dedication card. If anything needs fixing, we fix it before it's printed.</div></details>
+  </div>
+</section>
+
+<!-- ══════════════ FINALE ══════════════ -->
+<section class="sec finale">
+  <div class="wrap narrow">
+    <p class="heb rv">וְנִשְׁמָתוֹ תְּהֵא צְרוּרָה בִּצְרוֹר הַחַיִּים</p>
+    <h2 class="rv">Someone's name, said out loud,<br>in a room full of learning.</h2>
+    <p class="lede rv" style="margin:1.2rem auto 0;text-align:center">Weekday mornings. Four nights a week. Take one.</p>
+    <a class="btn btn--gold btn--lg rv" href="#board">Sponsor now</a>
+  </div>
+</section>
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <a class="brand" href="#top" style="margin-bottom:1rem">
+          <span class="brand__txt"><b style="color:#fff">YC Learning Program</b><small>Elul 5786</small></span>
+        </a>
+        <p style="max-width:34ch">Elevating souls, one seder at a time — through the learning of boys who are still finding their own.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="#elul">Why Elul</a></li>
+          <li><a href="#board">The Elul board</a></li>
+          <li><a href="#card">Your dedication card</a></li>
+          <li><a href="#tiers">Sponsorship levels</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Get in touch</h4>
+        <ul>
+          <li class="foot__c">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5a2 2 0 0 1 2-2h3.3a1 1 0 0 1 .9.7l1.5 4.5a1 1 0 0 1-.5 1.2l-2.3 1.1a11 11 0 0 0 5.5 5.5l1.1-2.3a1 1 0 0 1 1.2-.5l4.5 1.5a1 1 0 0 1 .7.9V19a2 2 0 0 1-2 2h-1C9.7 21 3 14.3 3 6V5Z"/></svg>
+            <a href="tel:+27664335434">+27 66 433 5434</a>
+          </li>
+          <li class="foot__c">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.7 16.7 13.4 20.9a2 2 0 0 1-2.8 0l-4.3-4.2a8 8 0 1 1 11.4 0Z"/><circle cx="12" cy="11" r="3"/></svg>
+            <span>1 Long Avenue, Glenhazel, 2192</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot__b">
+      <span>© <span id="yr"></span> YC Learning Program · Elul 5786</span>
+      <span>Made for the boys in the Beit Midrash.</span>
+    </div>
+  </div>
+</footer>
+
+<div class="dock" id="dock">
+  <a class="btn btn--gold btn--block" href="#board">Sponsor a seder this Elul</a>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+"use strict";
+
+/* ════════════════════════════════════════════════════════════
+   CONFIG — edit these
+   ════════════════════════════════════════════════════════════ */
+const CONFIG = {
+  // 1 Elul 5786 = 14 August 2026. Elul has 29 days.
+  eluStart: new Date(2026, 7, 14),
+  eluDays: 29,
+  roshHashana: new Date(2026, 8, 12, 0, 0, 0),   // 1 Tishrei 5787
+  galleryImages: ["hagba1.jpg","hagba2.jpg","hagba3.jpg","learning1.jpg","learning3.jpg","learning4.jpg","learning5.jpg","learning6.jpg"],
+
+  /* Public reservation endpoint. Do not put private donor data or
+     API keys in this file; the site source is visible online. */
+  endpoint: "https://script.google.com/macros/s/AKfycbyxLZ54K7FTOmK42yDkjT49EiK2_H1TEAWH12cxN6auvGLDBT_wA8d5lw59XaSyB0sK/exec",
+
+  /* Card/wallet link, shown as a button alongside the EFT details. */
+  payUrl: "https://walletdoc.com/pay/YCFoundation",
+
+  /* ── YOUR BANKING DETAILS ────────────────────────────────────
+     Shown to the sponsor once they've reserved, and repeated in
+     their confirmation email. These are YOUR details for people to
+     pay into — fill them in exactly as they appear on your bank
+     statement. Leave `account` empty and the panel stays hidden.  */
+  bank: {
+    accountName: "Yeshiva College Foundation",
+    bankName:    "Standard Bank",
+    account:     "001847244",
+    branch:      "004305",
+    accountType: "Business Current Account",
+    swift:       "",        // optional — only for payments from abroad
+    note:        "",        // optional — anything else they should know
+
+    /* The Foundation's reference convention. {name} is replaced with
+       the sponsor's own name, so they never paste "[Your Name]"
+       literally — which is what people do. */
+    reference:   "{name} + Kfar 2026"
+  },
+
+  liveSource: "https://script.google.com/macros/s/AKfycbyxLZ54K7FTOmK42yDkjT49EiK2_H1TEAWH12cxN6auvGLDBT_wA8d5lw59XaSyB0sK/exec",
+
+  /* Which public column holds what. Match your sheet's header row. */
+  liveColumns: {
+    day:   "Elul Day",          // 1–29
+    seder: "Seder",             // "Morning" / "Night" / "Both"
+    type:  "Dedication Type",   // memory / refuah / honour / hatzlacha
+    name:  "Name",
+    heb:   "Hebrew Name"
+  },
+
+};
+
+/* ── LIVE DEDICATIONS ─────────────────────────────────────────
+   key = "<elul day number>:<morning|night>"
+   type = iluy | refuah | kavod | hatzlacha
+   ─────────────────────────────────────────────────────────── */
+const DEDICATIONS = {};
+
+const TYPES = {
+  iluy:      { en:"In memory of",  heb:"לעילוי נשמת", short:"L'iluy Nishmat" },
+  refuah:    { en:"For the refuah shleimah of", heb:"לרפואה שלמה", short:"Refuah Shleimah" },
+  kavod:     { en:"In honour of",  heb:"לכבוד",       short:"Likhvod" },
+  hatzlacha: { en:"For the hatzlacha of", heb:"להצלחת", short:"L'hatzlachat" },
+  other:     { en:"In gratitude for",     heb:"",           short:"Other" }
+};
+
+const $  = (s,r)=> (r||document).querySelector(s);
+const $$ = (s,r)=> Array.from((r||document).querySelectorAll(s));
+const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ════════════════════════════════════════════════════════════
+   NAV / progress / dock
+   ════════════════════════════════════════════════════════════ */
+const burger = $("#burger"), mobile = $("#mobileMenu");
+function setMenuOpen(open){
+  burger.setAttribute("aria-expanded", String(open));
+  burger.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+  mobile.setAttribute("aria-hidden", String(!open));
+  mobile.classList.toggle("open", open);
+  document.body.classList.toggle("menu-open", open);
+}
+burger.addEventListener("click", ()=>{
+  const open = burger.getAttribute("aria-expanded") === "true";
+  setMenuOpen(!open);
+});
+$$("#mobileMenu a").forEach(a => a.addEventListener("click", ()=>{
+  setMenuOpen(false);
+}));
+mobile.addEventListener("click", e=>{
+  if(e.target === mobile) setMenuOpen(false);
+});
+window.addEventListener("keydown", e=>{
+  if(e.key === "Escape") setMenuOpen(false);
+});
+
+const progress = $("#progress"), dock = $("#dock"), navCta = $("#navCta");
+function onScroll(){
+  const h = document.documentElement.scrollHeight - window.innerHeight;
+  const p = h > 0 ? Math.min(1, window.scrollY / h) : 0;
+  progress.style.width = (p * 100) + "%";
+  const past = window.scrollY > window.innerHeight * .7;
+  dock.classList.toggle("show", past);
+  navCta.style.display = past && window.innerWidth >= 920 ? "inline-flex" : "none";
+  if(window.innerWidth >= 920) setMenuOpen(false);
+}
+window.addEventListener("scroll", onScroll, {passive:true});
+window.addEventListener("resize", onScroll);
+onScroll();
+
+/* ════════════════════════════════════════════════════════════
+   Reveal on scroll
+   ════════════════════════════════════════════════════════════ */
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach((e,i)=>{
+    if(e.isIntersecting){
+      const el = e.target;
+      const delay = Math.min(280, (Array.from(el.parentNode.children).indexOf(el) % 6) * 70);
+      setTimeout(()=> el.classList.add("in"), reduced ? 0 : delay);
+      io.unobserve(el);
+    }
+  });
+}, {threshold:.12, rootMargin:"0px 0px -8% 0px"});
+$$(".rv").forEach(el => io.observe(el));
+
+/* backstop — nothing may ever stay invisible */
+setTimeout(()=> $$(".rv").forEach(el => el.classList.add("in")), 2500);
+
+/* ════════════════════════════════════════════════════════════
+   Counters
+   ════════════════════════════════════════════════════════════ */
+const cio = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(!e.isIntersecting) return;
+    const el = e.target;
+    const target = +el.dataset.count;
+    const suffix = el.dataset.suffix || "";
+    const dur = reduced ? 0 : 1600;
+    const t0 = performance.now();
+    (function step(now){
+      const t = dur ? Math.min(1,(now-t0)/dur) : 1;
+      const eased = 1 - Math.pow(1-t, 3);
+      el.textContent = Math.round(target*eased).toLocaleString("en-ZA") + (t===1 ? suffix : "");
+      if(t < 1) requestAnimationFrame(step);
+    })(t0);
+    cio.unobserve(el);
+  });
+}, {threshold:.5});
+$$("[data-count]").forEach(el => cio.observe(el));
+
+/* ════════════════════════════════════════════════════════════
+   Countdown
+   ════════════════════════════════════════════════════════════ */
+const cd = { d:$("#cd-d"), h:$("#cd-h"), m:$("#cd-m"), s:$("#cd-s") };
+function tick(){
+  let ms = CONFIG.roshHashana - Date.now();
+  if(ms < 0) ms = 0;
+  const d = Math.floor(ms/864e5), h = Math.floor(ms/36e5)%24,
+        m = Math.floor(ms/6e4)%60, s = Math.floor(ms/1e3)%60;
+  cd.d.textContent = d;
+  cd.h.textContent = String(h).padStart(2,"0");
+  cd.m.textContent = String(m).padStart(2,"0");
+  cd.s.textContent = String(s).padStart(2,"0");
+}
+tick(); setInterval(tick, 1000);
+
+/* live note — is the Beit Midrash likely open right now? */
+(function liveNote(){
+  const el = $("#liveNote");
+  const now = new Date(), hr = now.getHours(), day = now.getDay();
+  if(day === 6) el.textContent = "Shabbat — next seder is Monday morning";
+  else if(day >= 1 && day <= 5 && hr >= 7 && hr < 13) el.textContent = "Morning seder is running right now";
+  else if(day >= 1 && day <= 4 && hr >= 17 && hr < 22) el.textContent = "Night seder is running right now";
+  else if(day >= 1 && day <= 5 && hr < 7) el.textContent = "Next seder: this morning, 7:30";
+  else if(day >= 1 && day <= 4 && hr < 17) el.textContent = "Next seder: tonight, 17:30";
+  else if(day >= 0 && day <= 4) el.textContent = "Next seder: tomorrow morning, 7:30";
+  else el.textContent = "Next seder: Monday morning, 7:30";
+})();
+
+/* ════════════════════════════════════════════════════════════
+   Elul board
+   ════════════════════════════════════════════════════════════ */
+const HEB_ONES = ["","א","ב","ג","ד","ה","ו","ז","ח","ט"];
+const HEB_TENS = ["","י","כ","ל"];
+function hebNum(n){
+  if(n === 15) return "טו";
+  if(n === 16) return "טז";
+  return HEB_TENS[Math.floor(n/10)] + HEB_ONES[n%10];
+}
+function dayDate(n){
+  const d = new Date(CONFIG.eluStart);
+  d.setDate(d.getDate() + (n-1));
+  return d;
+}
+const fmtShort = new Intl.DateTimeFormat("en-ZA",{day:"numeric",month:"short"});
+const fmtLong  = new Intl.DateTimeFormat("en-ZA",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+
+function ded(n, seder){ return DEDICATIONS[n + ":" + seder] || null; }
+
+let sponsoredCount = 0;
+let meterShown = false;
+
+function sederLabel(seder){ return seder === "night" ? "Night Seder" : "Morning Seder"; }
+function scheduledSedarim(n){
+  if(n === 29) return [];
+  const dow = dayDate(n).getDay(); // 0 Sun, 1 Mon, ... 6 Shabbat
+  const slots = [];
+  if(dow >= 1 && dow <= 5) slots.push("morning");
+  if(dow >= 1 && dow <= 4) slots.push("night");
+  return slots;
+}
+function isSederScheduled(n, seder){ return scheduledSedarim(n).includes(seder); }
+const total = Array.from({length: CONFIG.eluDays}, (_,i)=> scheduledSedarim(i + 1).length)
+  .reduce((sum,n)=> sum + n, 0);
+
+function buildBoard(){
+  const grid = $("#grid29");
+  grid.innerHTML = "";
+  sponsoredCount = 0;
+  const startOfToday = new Date(new Date().toDateString());
+
+  for(let n = 1; n <= CONFIG.eluDays; n++){
+    const date = dayDate(n);
+    const mor = ded(n,"morning"), nig = ded(n,"night");
+    const scheduled = scheduledSedarim(n);
+    const hasMorning = scheduled.includes("morning");
+    const hasNight = scheduled.includes("night");
+    const taken = (mor?1:0) + (nig?1:0);
+    sponsoredCount += taken;
+
+    const isToday = startOfToday.toDateString() === date.toDateString();
+    const isPast  = date < startOfToday;
+
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "day" + (taken===2 ? " full" : taken===1 ? " part" : "") +
+                  (scheduled.length ? "" : " closed") +
+                  (isToday ? " today" : "") + (isPast ? " past" : "");
+    b.setAttribute("role","listitem");
+    b.dataset.day = n;
+    b.setAttribute("aria-label",
+      scheduled.length
+        ? `${n} Elul, ${fmtLong.format(date)} — ${taken} of ${scheduled.length} scheduled sedarim sponsored`
+        : `${n} Elul, ${fmtLong.format(date)} — no scheduled learning`);
+
+    b.innerHTML =
+      (taken ? '<span class="day__flame"></span>' : '') +
+      `<span class="day__heb">${hebNum(n)}</span>` +
+      `<span class="day__date">${fmtShort.format(date)}</span>` +
+      `<span class="day__pips"><i class="${mor?"on":hasMorning?"":"off"}"></i><i class="${nig?"on":hasNight?"":"off"}"></i></span>` +
+      (taken ? `<span class="day__name">${escapeHtml((mor||nig).name)}</span>` : '');
+
+    if(scheduled.length) b.addEventListener("click", ()=> openDay(n));
+    else b.disabled = true;
+    grid.appendChild(b);
+  }
+
+  $("#meterT").textContent = total;
+  $("#meterN").textContent = sponsoredCount;
+  $("#boardFoot").textContent =
+    `${total - sponsoredCount} of ${total} scheduled sedarim still open. Erev Rosh Hashana is 29 Elul and is not listed for sponsorship.`;
+  if(meterShown) $("#meterFill").style.width = (sponsoredCount/total*100).toFixed(1) + "%";
+}
+buildBoard();
+
+const meterIo = new IntersectionObserver(es=>{
+  es.forEach(e=>{
+    if(!e.isIntersecting) return;
+    meterShown = true;
+    $("#meterFill").style.width = (sponsoredCount/total*100).toFixed(1) + "%";
+    meterIo.unobserve(e.target);
+  });
+},{threshold:.4});
+meterIo.observe($(".meter"));
+
+/* ════════════════════════════════════════════════════════════
+   Live board — reads what has actually been reserved
+   ════════════════════════════════════════════════════════════ */
+function normType(v){
+  const s = String(v||"").toLowerCase();
+  if(/refua|heal|cholim/.test(s))                      return "refuah";
+  if(/hatzlach|success|bracha|brocha/.test(s))         return "hatzlacha";
+  if(/honou?r|kavod|simcha|birthday|bar ?mitz|bat ?mitz|anniversar/.test(s)) return "kavod";
+  return "iluy";
+}
+function normSeder(v){
+  const s = String(v||"").toLowerCase();
+  if(/both|full|whole|entire/.test(s)) return "both";
+  if(/night|evening|eve\b/.test(s))    return "night";
+  return "morning";
+}
+
+function parseCSV(text){
+  const rows = [];
+  let row = [], field = "", inQuotes = false;
+  for(let i = 0; i < text.length; i++){
+    const c = text[i];
+    if(inQuotes){
+      if(c === '"'){
+        if(text[i+1] === '"'){ field += '"'; i++; } else inQuotes = false;
+      } else field += c;
+    }
+    else if(c === '"') inQuotes = true;
+    else if(c === ",") { row.push(field); field = ""; }
+    else if(c === "\n"){ row.push(field); rows.push(row); row = []; field = ""; }
+    else if(c !== "\r") field += c;
+  }
+  if(field !== "" || row.length){ row.push(field); rows.push(row); }
+  if(rows.length < 2) return [];
+  const head = rows.shift().map(h => h.trim());
+  return rows
+    .filter(r => r.some(v => v.trim() !== ""))
+    .map(r => { const o = {}; head.forEach((h,i)=> o[h] = (r[i]||"").trim()); return o; });
+}
+
+function applyRows(rows){
+  const cols = CONFIG.liveColumns;
+  const next = {};
+  let added = 0;
+
+  rows.forEach(r=>{
+    const get = key => {
+      const want = String(cols[key]||"").toLowerCase().trim();
+      if(!want) return "";
+      for(const k in r){ if(k.toLowerCase().trim() === want) return r[k]; }
+      return "";
+    };
+    const n = parseInt(get("day"), 10);
+    const name = String(get("name")||"").trim();
+    if(!(n >= 1 && n <= CONFIG.eluDays) || !name) return;
+
+    const entry = { type: normType(get("type")), name, heb: String(get("heb")||"").trim() };
+    const s = normSeder(get("seder"));
+    (s === "both" ? scheduledSedarim(n) : [s]).forEach(k=>{
+      if(!isSederScheduled(n, k)) return;
+      next[n + ":" + k] = entry; added++;
+    });
+  });
+
+  Object.keys(DEDICATIONS).forEach(k => delete DEDICATIONS[k]);
+  Object.assign(DEDICATIONS, next);
+  buildBoard();
+  updateDayHint();
+  return added;
+}
+
+const liveReservationsUrl = CONFIG.liveSource || CONFIG.endpoint;
+function refreshReservations(){
+  if(!liveReservationsUrl) return;
+  fetch(liveReservationsUrl, {cache:"no-store"})
+    .then(r => r.ok ? r.text() : Promise.reject(r.status))
+    .then(txt=>{
+      const rows = txt.trim().charAt(0) === "[" ? JSON.parse(txt) : parseCSV(txt);
+      const added = applyRows(rows);
+      $("#boardFoot").textContent += added
+        ? " Updated from sponsorships received."
+        : " No sponsorships have been received yet.";
+    })
+    .catch(()=>{ /* unreachable feed — the local list stays up */ });
+}
+refreshReservations();
+if(liveReservationsUrl){
+  setInterval(refreshReservations, 45000);
+}
+
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+
+/* ── day sheet ── */
+const sheet = $("#daySheet");
+function openDay(n){
+  const date = dayDate(n);
+  $("#sheetHeb").textContent = hebNum(n);
+  $("#sheetTitle").textContent = n + " Elul" + (n===29 ? " · Erev Rosh Hashana" : "");
+  $("#sheetDate").textContent = fmtLong.format(date);
+
+  const wrap = $("#sheetSlots");
+  wrap.innerHTML = "";
+  const scheduled = scheduledSedarim(n);
+  scheduled.forEach(key=>{
+    const label = sederLabel(key);
+    const d = ded(n,key);
+    const row = document.createElement("div");
+    row.className = "slot" + (d ? "" : " slot--open");
+    if(d){
+      const t = TYPES[d.type];
+      row.innerHTML =
+        `<div class="slot__t"><b>${label}</b><span>${t.en} ${escapeHtml(d.name)}</span>` +
+        (d.heb ? `<span class="heb">${escapeHtml(t.heb + " " + d.heb)}</span>` : "") +
+        `</div>`;
+    } else {
+      row.innerHTML =
+        `<div class="slot__t"><b>${label}</b><span>Open — no dedication yet</span></div>` +
+        `<button type="button" class="btn btn--gold" data-take="${key}">Take it</button>`;
+    }
+    wrap.appendChild(row);
+  });
+
+  const foot = document.createElement("p");
+  foot.style.cssText = "font-size:.78rem;color:var(--on-night-3);margin-top:1rem;text-align:center";
+  foot.textContent = scheduled.length === 2
+    ? "Recommended amounts: R360 per seder · R1 800 for the full day"
+    : "Recommended amount: R360 for the scheduled morning seder";
+  wrap.appendChild(foot);
+
+  wrap.querySelectorAll("[data-take]").forEach(b=>{
+    b.addEventListener("click", ()=>{
+      sheet.close();
+      takeSlot(n, b.dataset.take);
+    });
+  });
+
+  if(wrap.querySelector(".slot--open")){
+    const hint = document.createElement("p");
+    hint.style.cssText = "font-size:.72rem;color:var(--on-night-3);opacity:.75;margin-top:.45rem;text-align:center";
+    hint.textContent = `Takes you to the form with ${n} Elul already selected.`;
+    wrap.appendChild(hint);
+  }
+
+  if(typeof sheet.showModal === "function") sheet.showModal();
+  else sheet.setAttribute("open","");
+}
+$("#sheetX").addEventListener("click", ()=> sheet.close());
+sheet.addEventListener("click", e => { if(e.target === sheet) sheet.close(); });
+
+/* ════════════════════════════════════════════════════════════
+   Dedication card builder
+   ════════════════════════════════════════════════════════════ */
+const state = { type:"iluy", name:"", heb:"", from:"", other:"" };
+const mType = $("#mType"), mName = $("#mName"), mHeb = $("#mHeb"), mFrom = $("#mFrom");
+
+const PLACEHOLDER = { name:"Name for the dedication", heb:"השם יופיע כאן" };
+
+/* The lead line on the card. For "other" it's whatever they typed. */
+function leadLine(){
+  const t = TYPES[state.type];
+  return state.type === "other" ? (state.other.trim() || t.en) : t.en;
+}
+
+function render(){
+  const t = TYPES[state.type];
+  const name = state.name.trim() || PLACEHOLDER.name;
+  const heb  = state.heb.trim()  || (state.name.trim() ? "" : PLACEHOLDER.heb);
+  mType.textContent = leadLine();
+  mName.textContent = name;
+  mHeb.textContent  = t.heb ? (heb ? t.heb + " " + heb : t.heb) : heb;
+  mFrom.textContent = $("#fAnon") && $("#fAnon").checked
+    ? "Sponsored anonymously"
+    : (state.from.trim()
+        ? "Sponsored by " + state.from.trim()
+        : "Today's learning is dedicated in their name");
+  if(typeof renderPledge === "function") renderPledge();
+}
+
+$("#segType").addEventListener("click", e=>{
+  const btn = e.target.closest("button[data-type]");
+  if(!btn) return;
+  $$("#segType button").forEach(b => b.setAttribute("aria-pressed", String(b === btn)));
+  state.type = btn.dataset.type;
+  $("#fType").value = state.type;
+  $("#otherWrap").hidden = state.type !== "other";
+  if(state.type === "other") $("#fOther").focus();
+  render();
+});
+$("#fName").addEventListener("input",  e=>{ state.name  = e.target.value; render(); });
+$("#fHeb").addEventListener("input",   e=>{ state.heb   = e.target.value; render(); });
+$("#fFrom").addEventListener("input",  e=>{ state.from  = e.target.value; render(); });
+$("#fOther").addEventListener("input", e=>{ state.other = e.target.value; render(); });
+$("#fAnon").addEventListener("change", render);
+
+/* The "bli neder" line, kept in step with what they've typed. */
+function renderPledge(){
+  const who = $("#fSponsorName").value.trim() || "I";
+  const amt = $("#fAmount").value.trim();
+  $("#pledge").innerHTML =
+    `<b>${escapeHtml(who)}</b> will <b>bli neder</b> donate ` +
+    (amt ? `<b>R${escapeHtml(amt)}</b>` : "the amount above") +
+    ` for the sponsorship of learning.`;
+  renderPaymentPreview();
+}
+$("#fSponsorName").addEventListener("input", renderPledge);
+$("#fAmount").addEventListener("input", renderPledge);
+
+render();
+
+/* ── day / seder pickers ── */
+const fDay = $("#fDay"), fSeder = $("#fSeder"), dayHint = $("#dayHint");
+
+function fillDays(){
+  const keep = fDay.value;
+  fDay.innerHTML = "";
+  for(let n = 1; n <= CONFIG.eluDays; n++){
+    const slots = scheduledSedarim(n);
+    if(!slots.length) continue;
+    const o = document.createElement("option");
+    o.value = n;
+    o.textContent = `${n} Elul — ${fmtShort.format(dayDate(n))}${slots.length === 1 ? " · morning only" : ""}${n===29 ? " · Erev Rosh Hashana" : ""}`;
+    fDay.appendChild(o);
+  }
+  if(keep && [...fDay.options].some(o => o.value === keep)) fDay.value = keep;
+}
+fillDays();
+
+function updateSederOptions(){
+  const n = +fDay.value;
+  const slots = scheduledSedarim(n);
+  const keep = fSeder.value;
+  fSeder.innerHTML = "";
+
+  if(slots.includes("morning")){
+    const o = document.createElement("option");
+    o.value = "morning";
+    o.textContent = "Morning seder · 7:30";
+    fSeder.appendChild(o);
+  }
+  if(slots.includes("night")){
+    const o = document.createElement("option");
+    o.value = "night";
+    o.textContent = "Night seder · 17:30";
+    fSeder.appendChild(o);
+  }
+  if(slots.length === 2){
+    const o = document.createElement("option");
+    o.value = "both";
+    o.textContent = "Both — the full day";
+    fSeder.appendChild(o);
+  }
+
+  if(keep && [...fSeder.options].some(o => o.value === keep)) fSeder.value = keep;
+}
+updateSederOptions();
+
+function slotFree(n, seder){
+  const slots = scheduledSedarim(n);
+  if(!slots.length) return false;
+  if(seder === "both") return slots.length === 2 && !ded(n,"morning") && !ded(n,"night");
+  return slots.includes(seder) && !ded(n, seder);
+}
+function updateDayHint(){
+  const n = +fDay.value, s = fSeder.value;
+  if(!isSederScheduled(n, s) && s !== "both"){
+    dayHint.textContent = "There is no scheduled learning for that slot.";
+    return;
+  }
+  if(slotFree(n, s)){ dayHint.textContent = ""; return; }
+  dayHint.textContent = s === "both"
+    ? `${n} Elul isn't fully open — one of its sedarim is already taken.`
+    : `That seder on ${n} Elul is already taken. Pick another and we'll hold it for you.`;
+}
+fDay.addEventListener("change", ()=>{ updateSederOptions(); updateDayHint(); });
+fSeder.addEventListener("change", updateDayHint);
+updateDayHint();
+
+/* Called from a "Take it" button on the board. */
+function takeSlot(n, seder){
+  fDay.value = String(n);
+  fSeder.value = seder;
+  updateDayHint();
+  $("#card").scrollIntoView({ behavior: reduced ? "auto" : "smooth", block:"start" });
+  setTimeout(()=>{
+    try{ $("#fName").focus({ preventScroll:true }); }catch(e){ $("#fName").focus(); }
+  }, reduced ? 0 : 700);
+}
+
+/* ── submitting ── */
+const formEl = $("#cardForm"), statusEl = $("#formStatus"), btnSubmit = $("#btnSubmit");
+
+function setStatus(msg){
+  statusEl.textContent = msg;
+  statusEl.className = msg ? "status status--bad show" : "status";
+}
+
+if(!CONFIG.endpoint){
+  $("#payNote").textContent = "To reserve a seder, please call +27 66 433 5434. Payment details are shown above.";
+}
+
+formEl.addEventListener("submit", function(ev){
+  ev.preventDefault();
+  setStatus("");
+
+  const n = +fDay.value, seder = fSeder.value;
+  const payload = {
+    day: n, seder, type: state.type,
+    lead:         leadLine(),
+    name:         state.name.trim(),
+    heb:          state.heb.trim(),
+    from:         state.from.trim(),
+    yartzeit:     $("#fYartzeit").value.trim(),
+    anonymous:    $("#fAnon").checked ? "Yes" : "",
+    amount:       $("#fAmount").value.trim(),
+    sponsorName:  $("#fSponsorName").value.trim(),
+    sponsorEmail: $("#fEmail").value.trim(),
+    sponsorPhone: $("#fPhone").value.trim(),
+    website:      $("#fWebsite").value
+  };
+
+  if(!payload.name){ setStatus("Please enter the name the learning is for."); $("#fName").focus(); return; }
+
+  if(!CONFIG.endpoint){
+    setStatus("Online reservations are not available yet. Please call +27 66 433 5434 to reserve your seder.");
+    return;
+  }
+
+  if(!payload.sponsorName){ setStatus("Please add your name."); $("#fSponsorName").focus(); return; }
+  if(!payload.sponsorEmail){ setStatus("Please add an email — that's where your confirmation goes."); $("#fEmail").focus(); return; }
+  if(!payload.sponsorPhone){ setStatus("Please add a phone number so we can reach you about the dedication."); $("#fPhone").focus(); return; }
+  if(seder === "both" ? scheduledSedarim(n).length !== 2 : !isSederScheduled(n, seder)){
+    setStatus("That learning slot is not scheduled. Please choose a weekday morning, or a Monday-Thursday night.");
+    return;
+  }
+  if(!slotFree(n, seder)){ setStatus("That seder has already been taken. Please choose another."); return; }
+
+  btnSubmit.disabled = true;
+  btnSubmit.textContent = "Reserving…";
+
+  /* text/plain keeps this a simple request, so the browser doesn't
+     preflight it — Apps Script can't answer a preflight. */
+  fetch(CONFIG.endpoint, {
+    method: "POST",
+    headers: { "Content-Type": "text/plain;charset=utf-8" },
+    body: JSON.stringify(payload)
+  })
+    .then(r => r.json())
+    .then(res=>{
+      if(res && res.ok) return showDone(n, seder);
+      if(res && res.error === "taken"){
+        DEDICATIONS[n + ":" + (seder === "both" ? "morning" : seder)] =
+          { type:"iluy", name:"Reserved", heb:"" };
+        buildBoard(); updateDayHint();
+        setStatus(res.message || "That seder has just been taken. Please pick another.");
+      } else {
+        setStatus("Something went wrong saving that. Please call +27 66 433 5434 and we'll book it for you.");
+      }
+      btnSubmit.disabled = false;
+      btnSubmit.textContent = "Reserve this seder";
+    })
+    .catch(()=>{
+      setStatus("We couldn't reach the server — nothing has been reserved. Please check your connection and try again, or call +27 66 433 5434.");
+      btnSubmit.disabled = false;
+      btnSubmit.textContent = "Reserve this seder";
+    });
+});
+
+/* A reference that says exactly which slot it is, so you can read a
+   bank statement and know what was paid for. Unique by construction,
+   because the same slot can't be booked twice. */
+function bookingRef(n, seder){
+  const letter = seder === "night" ? "N" : seder === "both" ? "D" : "M";
+  return "ELUL-" + String(n).padStart(2,"0") + letter;
+}
+
+/* What the sponsor should put in their bank's reference box. Follows
+   the Foundation's own convention, with their name filled in. */
+function payReference(){
+  const b = CONFIG.bank || {};
+  const who = $("#fSponsorName").value.trim();
+  const tpl = b.reference || "{name}";
+  return tpl.replace("{name}", who || "Your Name").trim();
+}
+
+function paymentRows(ref){
+  const b = CONFIG.bank || {};
+  return [
+    ["Account name", b.accountName],
+    ["Bank",         b.bankName],
+    ["Account #",    b.account],
+    ["Branch code",  b.branch],
+    ["Account type", b.accountType],
+    ["SWIFT",        b.swift],
+    ["Reference",    ref],
+    ["Note",         b.note]
+  ].filter(r => r[1]);
+}
+
+function fillPaymentBox(box, rows){
+  box.innerHTML = "";
+  rows.forEach(([k,v])=>{
+    const row = document.createElement("div");
+    row.className = "pay__row";
+    row.innerHTML = `<dt>${escapeHtml(k)}</dt><dd>${escapeHtml(v)}</dd>`;
+    box.appendChild(row);
+  });
+}
+
+function copyPaymentRows(rows){
+  const txt = rows.map(([k,v]) => k + ": " + v).join("\n");
+  copyText(txt).then(ok => toast(ok ? "Banking details copied" : "Couldn't copy — please type them across"));
+}
+
+const payDialog = $("#payDialog");
+function openPayDialog(ev){
+  if(ev) ev.preventDefault();
+  if(!CONFIG.payUrl) return;
+
+  const ref = payReference();
+  $("#payDialogRef").textContent = ref;
+  $("#payDialogLink").href = CONFIG.payUrl;
+  $("#payDialogRaw").href = CONFIG.payUrl;
+  $("#payDialogRaw").textContent = CONFIG.payUrl;
+
+  if(payDialog && typeof payDialog.showModal === "function") payDialog.showModal();
+  else if(window.confirm("Open the secure WalletDoc payment link?")) window.open(CONFIG.payUrl, "_blank", "noopener");
+}
+
+function wirePaymentPopup(el){
+  if(!el) return;
+  if(CONFIG.payUrl){
+    el.href = CONFIG.payUrl;
+    el.hidden = false;
+    el.onclick = openPayDialog;
+  } else {
+    el.hidden = true;
+  }
+}
+
+$("#payDialogX").addEventListener("click", ()=> payDialog.close());
+$("#payDialogClose").addEventListener("click", ()=> payDialog.close());
+payDialog.addEventListener("click", e => { if(e.target === payDialog) payDialog.close(); });
+$("#payDialogLink").addEventListener("click", ()=>{ if(payDialog.open) payDialog.close(); });
+$("#payDialogRaw").addEventListener("click", ()=>{ if(payDialog.open) payDialog.close(); });
+
+function renderPaymentPreview(){
+  const b = CONFIG.bank || {};
+  const panel = $("#payBefore");
+  if(!panel) return;
+  if(!b.account){ panel.hidden = true; return; }
+
+  const ref = payReference();
+  const rows = paymentRows(ref);
+  fillPaymentBox($("#payBeforeBox"), rows);
+  $("#payBeforeRef").textContent = ref;
+  panel.hidden = false;
+
+  wirePaymentPopup($("#btnPayBefore"));
+
+  $("#btnCopyBankBefore").onclick = ()=> copyPaymentRows(rows);
+}
+
+function renderPayment(bookingCode){
+  const b = CONFIG.bank || {};
+  const ref = payReference();
+  const rows = paymentRows(ref);
+
+  if(!b.account){ $("#payBlock").hidden = true; return; }
+
+  fillPaymentBox($("#payBox"), rows);
+  $("#payRef").textContent = ref;
+  $("#payBlock").hidden = false;
+  $("#payBooking").textContent = bookingCode;
+
+  $("#btnCopyBank").onclick = ()=> copyPaymentRows(rows);
+}
+
+function showDone(n, seder){
+  const entry = { type: state.type, name: state.name.trim(), heb: state.heb.trim() };
+  (seder === "both" ? ["morning","night"] : [seder]).forEach(k=>{
+    DEDICATIONS[n + ":" + k] = entry;
+  });
+  buildBoard();
+
+  $("#doneSlot").textContent =
+    `${n} Elul 5786 · ${fmtLong.format(dayDate(n))} · ` +
+    (seder === "both" ? "Both sedarim" : sederLabel(seder));
+  $("#doneMsg").textContent =
+    `${leadLine()} ${entry.name}. The dedication will be printed for the shtenders and announced before learning begins.` +
+    ($("#fEmail").value.trim() ? " A confirmation is on its way to your inbox." : "");
+
+  renderPayment(bookingRef(n, seder));
+
+  wirePaymentPopup($("#btnPay"));
+
+  formEl.hidden = true;
+  $("#donePanel").hidden = false;
+  $("#donePanel").scrollIntoView({ behavior: reduced ? "auto" : "smooth", block:"center" });
+}
+
+$("#btnDownload2").addEventListener("click", ()=>{
+  try{ drawCard(); } catch(err){ toast("Could not generate the image on this browser"); }
+});
+
+/* Clipboard. navigator.clipboard only exists on https/localhost, so a
+   page opened straight off the disk needs the old execCommand path. */
+function copyText(txt){
+  if(navigator.clipboard && window.isSecureContext){
+    return navigator.clipboard.writeText(txt).then(()=> true).catch(()=> legacyCopy(txt));
+  }
+  return Promise.resolve(legacyCopy(txt));
+}
+function legacyCopy(txt){
+  try{
+    const ta = document.createElement("textarea");
+    ta.value = txt;
+    ta.setAttribute("readonly","");
+    ta.style.cssText = "position:fixed;top:0;left:-9999px;opacity:0";
+    document.body.appendChild(ta);
+    ta.select();
+    ta.setSelectionRange(0, ta.value.length);
+    const ok = document.execCommand("copy");
+    ta.remove();
+    return ok;
+  } catch(e){ return false; }
+}
+
+/* ── toast ── */
+let toastTimer;
+function toast(msg){
+  const t = $("#toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=> t.classList.remove("show"), 3600);
+}
+
+/* ── 3D tilt ── */
+const mcard = $("#mcard"), mShine = $("#mShine"), mHolo = $("#mHolo");
+let tiltRaf = null;
+function tiltTo(px, py){          /* px,py in 0..1 */
+  if(tiltRaf) return;
+  tiltRaf = requestAnimationFrame(()=>{
+    tiltRaf = null;
+    const rx = (0.5 - py) * 14, ry = (px - 0.5) * 18;
+    mcard.style.transform = `rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg) translateZ(0)`;
+    mShine.style.opacity = "1";
+    mShine.style.background =
+      `radial-gradient(circle at ${(px*100).toFixed(1)}% ${(py*100).toFixed(1)}%, rgba(255,235,200,.55), rgba(255,255,255,.12) 32%, transparent 62%)`;
+    const hue = 30 + px * 200;
+    mHolo.style.opacity = "0.35";
+    mHolo.style.background =
+      `linear-gradient(${(px*180).toFixed(0)}deg, transparent 0%, hsla(${hue},80%,60%,.20) 32%, hsla(${(hue+50)%360},85%,66%,.26) 52%, hsla(${(hue+100)%360},80%,60%,.18) 70%, transparent 100%)`;
+  });
+}
+function tiltReset(){
+  mcard.style.transform = "";
+  mShine.style.opacity = "0";
+  mHolo.style.opacity = "0";
+}
+if(!reduced){
+  mcard.addEventListener("pointermove", e=>{
+    const r = mcard.getBoundingClientRect();
+    tiltTo((e.clientX - r.left)/r.width, (e.clientY - r.top)/r.height);
+  });
+  mcard.addEventListener("pointerleave", tiltReset);
+  mcard.addEventListener("pointercancel", tiltReset);
+
+  window.addEventListener("deviceorientation", e=>{
+    if(window.innerWidth > 900 || e.gamma == null) return;
+    const g = Math.max(-40, Math.min(40, e.gamma));
+    const b = Math.max(-40, Math.min(40, (e.beta || 0) - 35));
+    tiltTo((g + 40)/80, (b + 40)/80);
+  });
+}
+
+/* ── download card as PNG ── */
+$("#btnDownload").addEventListener("click", ()=>{
+  try{ drawCard(); } catch(err){ toast("Could not generate the image on this browser"); }
+});
+
+function roundRect(ctx,x,y,w,h,r){
+  ctx.beginPath();
+  ctx.moveTo(x+r,y);
+  ctx.arcTo(x+w,y,x+w,y+h,r);
+  ctx.arcTo(x+w,y+h,x,y+h,r);
+  ctx.arcTo(x,y+h,x,y,r);
+  ctx.arcTo(x,y,x+w,y,r);
+  ctx.closePath();
+}
+
+function drawCard(){
+  const W = 1600, H = 960;
+  const c = document.createElement("canvas");
+  c.width = W; c.height = H;
+  const x = c.getContext("2d");
+  const t = TYPES[state.type];
+  const name = state.name.trim() || PLACEHOLDER.name;
+  const heb  = state.heb.trim();
+
+  /* background */
+  const bg = x.createLinearGradient(0,0,W,H);
+  bg.addColorStop(0,"#0E1626"); bg.addColorStop(.55,"#070C16"); bg.addColorStop(1,"#0B111E");
+  x.fillStyle = bg; x.fillRect(0,0,W,H);
+
+  /* candle glow behind */
+  const gl = x.createRadialGradient(W*0.79, H*0.30, 10, W*0.79, H*0.30, 460);
+  gl.addColorStop(0,"rgba(255,190,110,.30)");
+  gl.addColorStop(.45,"rgba(255,150,70,.10)");
+  gl.addColorStop(1,"rgba(255,150,70,0)");
+  x.fillStyle = gl; x.fillRect(0,0,W,H);
+
+  /* frame */
+  x.strokeStyle = "rgba(214,178,106,.42)"; x.lineWidth = 2;
+  roundRect(x, 44, 44, W-88, H-88, 18); x.stroke();
+  x.strokeStyle = "rgba(214,178,106,.9)"; x.lineWidth = 4;
+  x.beginPath(); x.moveTo(44,110); x.lineTo(44,44); x.lineTo(110,44); x.stroke();
+  x.beginPath(); x.moveTo(W-44,H-110); x.lineTo(W-44,H-44); x.lineTo(W-110,H-44); x.stroke();
+
+  const L = 118, textW = W*0.60;
+
+  /* kicker */
+  x.textAlign = "left"; x.textBaseline = "alphabetic";
+  x.fillStyle = "#D6B26A";
+  x.font = "600 22px Inter, Helvetica, Arial, sans-serif";
+  x.fillText("YC LEARNING PROGRAM  ·  ELUL 5786".split("").join(" "), L, 168);
+
+  /* type */
+  x.fillStyle = "#B9C4D4";
+  x.font = "500 34px 'Cormorant Garamond', Georgia, serif";
+  x.fillText(leadLine().toUpperCase(), L, 300);
+
+  /* name (wrapped) */
+  x.fillStyle = "#FFFFFF";
+  let size = 84;
+  x.font = `500 ${size}px 'Cormorant Garamond', Georgia, serif`;
+  while(x.measureText(name).width > textW && size > 42){
+    size -= 4;
+    x.font = `500 ${size}px 'Cormorant Garamond', Georgia, serif`;
+  }
+  const lines = wrapText(x, name, textW);
+  let y = 390;
+  lines.slice(0,3).forEach(ln=>{ x.fillText(ln, L, y); y += size * 1.12; });
+
+  /* hebrew */
+  if(heb){
+    x.fillStyle = "#F0D294";
+    x.font = "500 52px 'Frank Ruhl Libre', 'Times New Roman', serif";
+    x.direction = "rtl";
+    x.textAlign = "left";
+    const hebLine = (t.heb ? t.heb + " " : "") + heb;
+    x.fillText(hebLine, L, y + 34);
+    x.direction = "ltr";
+    y += 90;
+  }
+
+  /* footer line */
+  x.fillStyle = "#7E8CA3";
+  x.textAlign = "left";
+  x.font = "500 24px Inter, Helvetica, Arial, sans-serif";
+  const foot = state.from.trim() ? "SPONSORED BY " + state.from.trim().toUpperCase()
+                                 : "TODAY'S LEARNING IS DEDICATED IN THEIR NAME";
+  x.fillText(foot.split("").join(" "), L, H - 128);
+
+  /* candle */
+  drawCandle(x, W*0.79, H*0.26, 76, 540);
+
+  const url = c.toDataURL("image/png");
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "elul-dedication-" + (state.name.trim() || "card").replace(/[^a-z0-9]+/gi,"-").toLowerCase() + ".png";
+  document.body.appendChild(a); a.click(); a.remove();
+  toast("Card downloaded");
+}
+
+function wrapText(ctx, text, maxW){
+  const words = text.split(/\s+/), lines = [];
+  let line = "";
+  words.forEach(w=>{
+    const test = line ? line + " " + w : w;
+    if(ctx.measureText(test).width > maxW && line){ lines.push(line); line = w; }
+    else line = test;
+  });
+  if(line) lines.push(line);
+  return lines;
+}
+
+function drawCandle(x, cx, top, w, h){
+  /* body */
+  const body = x.createLinearGradient(cx - w/2, 0, cx + w/2, 0);
+  body.addColorStop(0,"rgba(226,214,190,.9)");
+  body.addColorStop(.38,"#FFFDF6");
+  body.addColorStop(.62,"#FFF8E8");
+  body.addColorStop(1,"rgba(206,192,166,.9)");
+  x.fillStyle = body;
+  roundRect(x, cx - w/2, top, w, h, 8); x.fill();
+
+  /* specular highlight — reads as a cylinder */
+  const spec = x.createLinearGradient(cx - w*0.30, 0, cx - w*0.06, 0);
+  spec.addColorStop(0, "rgba(255,255,255,0)");
+  spec.addColorStop(.55, "rgba(255,255,255,.55)");
+  spec.addColorStop(1, "rgba(255,255,255,0)");
+  x.fillStyle = spec;
+  roundRect(x, cx - w*0.30, top + 8, w*0.24, h - 16, 6); x.fill();
+
+  /* melted rim + warm pool of light at the top of the wax */
+  const rim = x.createLinearGradient(0, top, 0, top + 34);
+  rim.addColorStop(0, "rgba(255,214,150,.85)");
+  rim.addColorStop(1, "rgba(255,214,150,0)");
+  x.fillStyle = rim;
+  roundRect(x, cx - w/2, top, w, 34, 8); x.fill();
+
+  /* wick */
+  x.fillStyle = "#2A2118";
+  x.fillRect(cx - 2.5, top - 22, 5, 24);
+
+  /* flame */
+  const fg = x.createRadialGradient(cx, top - 40, 2, cx, top - 40, 74);
+  fg.addColorStop(0,"#FFFFFF");
+  fg.addColorStop(.16,"#FFF0C0");
+  fg.addColorStop(.34,"#FFD98A");
+  fg.addColorStop(.58,"#FF9E42");
+  fg.addColorStop(.85,"rgba(232,106,44,.35)");
+  fg.addColorStop(1,"rgba(232,106,44,0)");
+  x.fillStyle = fg;
+  x.beginPath();
+  x.ellipse(cx, top - 50, 34, 76, 0, 0, Math.PI*2);
+  x.fill();
+
+  /* hot core */
+  x.fillStyle = "rgba(255,255,255,.92)";
+  x.beginPath();
+  x.ellipse(cx, top - 40, 11, 30, 0, 0, Math.PI*2);
+  x.fill();
+}
+
+/* ════════════════════════════════════════════════════════════
+   Gallery — only shows images that actually load
+   ════════════════════════════════════════════════════════════ */
+(function gallery(){
+  const box = $("#slides"), dotsBox = $("#dots"), section = $("#gallery");
+  const loaded = [];
+  let pending = CONFIG.galleryImages.length;
+  if(!pending) return;
+
+  CONFIG.galleryImages.forEach((src, idx)=>{
+    const probe = new Image();
+    probe.onload  = ()=> { loaded.push({src, idx}); done(); };
+    probe.onerror = done;
+    probe.src = src;
+  });
+
+  function done(){
+    if(--pending > 0) return;
+    if(!loaded.length) return;                 // no images present → section stays hidden
+    loaded.sort((a,b)=> a.idx - b.idx);
+    section.classList.add("ready");
+
+    loaded.forEach((it,i)=>{
+      const img = document.createElement("img");
+      img.src = it.src; img.alt = "Learning in the Beit Midrash";
+      img.loading = i ? "lazy" : "eager";
+      if(i === 0) img.classList.add("on");
+      box.insertBefore(img, box.firstChild);
+
+      const d = document.createElement("button");
+      d.type = "button";
+      d.setAttribute("aria-label", "Slide " + (i+1));
+      d.setAttribute("aria-current", String(i === 0));
+      d.addEventListener("click", ()=> go(i));
+      dotsBox.appendChild(d);
+    });
+
+    const imgs = $$("#slides img"), dots = $$("#dots button");
+    let cur = 0, timer;
+    function go(i){
+      cur = (i + imgs.length) % imgs.length;
+      imgs.forEach((im,k)=> im.classList.toggle("on", k === cur));
+      dots.forEach((dd,k)=> dd.setAttribute("aria-current", String(k === cur)));
+      restart();
+    }
+    function restart(){
+      clearInterval(timer);
+      if(!reduced && imgs.length > 1) timer = setInterval(()=> go(cur+1), 6000);
+    }
+    $("#prevSlide").addEventListener("click", ()=> go(cur-1));
+    $("#nextSlide").addEventListener("click", ()=> go(cur+1));
+    restart();
+    document.addEventListener("visibilitychange", ()=> document.hidden ? clearInterval(timer) : restart());
+  }
+})();
+
+/* ════════════════════════════════════════════════════════════
+   Hero embers
+   ════════════════════════════════════════════════════════════ */
+(function embers(){
+  const cv = $("#embers");
+  if(!cv || reduced) return;
+  const ctx = cv.getContext("2d");
+  let w, h, parts = [], raf, visible = true;
+
+  function size(){
+    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    w = cv.clientWidth; h = cv.clientHeight;
+    cv.width = w * dpr; cv.height = h * dpr;
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    const n = Math.round(Math.min(70, w / 18));
+    parts = Array.from({length:n}, spawn);
+  }
+  function spawn(){
+    return {
+      x: Math.random()*w,
+      y: h + Math.random()*h*0.6,
+      r: Math.random()*1.7 + 0.5,
+      v: Math.random()*0.32 + 0.10,
+      d: Math.random()*Math.PI*2,
+      a: Math.random()*0.5 + 0.15,
+      hue: 30 + Math.random()*22
+    };
+  }
+  function frame(){
+    ctx.clearRect(0,0,w,h);
+    parts.forEach(p=>{
+      p.y -= p.v;
+      p.d += 0.008;
+      p.x += Math.sin(p.d) * 0.28;
+      if(p.y < -12){ Object.assign(p, spawn()); p.y = h + 10; }
+      const fade = p.y / h;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+      ctx.fillStyle = `hsla(${p.hue},95%,66%,${(p.a*fade).toFixed(3)})`;
+      ctx.shadowBlur = 9;
+      ctx.shadowColor = `hsla(${p.hue},95%,60%,.75)`;
+      ctx.fill();
+    });
+    ctx.shadowBlur = 0;
+    raf = requestAnimationFrame(frame);
+  }
+  size();
+  window.addEventListener("resize", size);
+  frame();
+
+  const heroIo = new IntersectionObserver(es=>{
+    es.forEach(e=>{
+      if(e.isIntersecting && !visible){ visible = true; frame(); }
+      else if(!e.isIntersecting && visible){ visible = false; cancelAnimationFrame(raf); }
+    });
+  },{threshold:0});
+  heroIo.observe(cv);
+  document.addEventListener("visibilitychange", ()=>{
+    if(document.hidden) cancelAnimationFrame(raf);
+    else if(visible) frame();
+  });
+})();
+
+/* year */
+$("#yr").textContent = new Date().getFullYear();
+
+})();
+</script>
+</body>
+</html>
