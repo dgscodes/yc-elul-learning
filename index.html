@@ -1891,6 +1891,7 @@ updateDayHint();
 /* Called from a "Take it" button on the board. */
 function takeSlot(n, seder){
   fDay.value = String(n);
+  updateSederOptions();          /* the new day has its own sedarim */
   fSeder.value = seder;
   updateDayHint();
   $("#card").scrollIntoView({ behavior: reduced ? "auto" : "smooth", block:"start" });
