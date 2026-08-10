@@ -1683,6 +1683,9 @@ function applyRows(rows){
 const liveReservationsUrl = CONFIG.liveSource || CONFIG.endpoint;
 function refreshReservations(){
   if(!liveReservationsUrl) return;
+  /* A backgrounded tab has nobody looking at it — don't spend the
+     script's execution quota on it. */
+  if(document.hidden) return;
   fetch(liveReservationsUrl, {cache:"no-store"})
     .then(r => r.ok ? r.text() : Promise.reject(r.status))
     .then(txt=>{
@@ -1696,7 +1699,14 @@ function refreshReservations(){
 }
 refreshReservations();
 if(liveReservationsUrl){
-  setInterval(refreshReservations, 45000);
+  /* Two minutes is plenty for a board that changes a few times a day,
+     and keeps well clear of Apps Script's execution limits when the
+     page is open on a lot of devices at once. */
+  setInterval(refreshReservations, 120000);
+  /* Coming back to the tab should feel current straight away. */
+  document.addEventListener("visibilitychange", ()=>{
+    if(!document.hidden) refreshReservations();
+  });
 }
 
 function escapeHtml(s){
@@ -1891,6 +1901,7 @@ updateDayHint();
 /* Called from a "Take it" button on the board. */
 function takeSlot(n, seder){
   fDay.value = String(n);
+  updateSederOptions();          /* the new day has its own sedarim */
   fSeder.value = seder;
   updateDayHint();
   $("#card").scrollIntoView({ behavior: reduced ? "auto" : "smooth", block:"start" });
