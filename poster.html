@@ -157,6 +157,11 @@ function pick(o, names){
   for(var i = 0; i < names.length; i++){
     var k = names[i].toLowerCase();
     if(o[k] !== undefined && String(o[k]).trim() !== "") return String(o[k]).trim();
+    for(var actual in o){
+      if(actual.toLowerCase().trim() === k && String(o[actual]).trim() !== ""){
+        return String(o[actual]).trim();
+      }
+    }
   }
   return "";
 }
