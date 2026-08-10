@@ -79,6 +79,11 @@
       <div class="row">
         <button type="button" id="btnLoad" class="primary">Load from the live sheet</button>
         <select id="filterDay"><option value="">Every day of Elul</option></select>
+        <select id="copies">
+          <option value="1">1 copy each</option>
+          <option value="2">2 copies each</option>
+          <option value="4">4 copies each</option>
+        </select>
         <button type="button" id="btnPrint" disabled>Print</button>
       </div>
       <p class="status" id="status"></p>
@@ -245,6 +250,15 @@ function toCards(list){
    needs margins fiddled with. */
 var CARD_W = 1748, CARD_H = 1240;
 
+function withCopies(cards){
+  var count = parseInt($("#copies").value, 10) || 1;
+  var out = [];
+  cards.forEach(function(card){
+    for(var i = 0; i < count; i++) out.push(card);
+  });
+  return out;
+}
+
 function render(cards){
   var host = $("#sheets");
   host.innerHTML = "";
@@ -256,14 +270,15 @@ function render(cards){
     return;
   }
 
-  for(var i = 0; i < cards.length; i += 4){
+  var printable = withCopies(cards);
+  for(var i = 0; i < printable.length; i += 4){
     var sheet = document.createElement("div");
     sheet.className = "sheet";
 
     for(var k = 0; k < 4; k++){
       var cell = document.createElement("div");
       cell.className = "cell";
-      var card = cards[i + k];
+      var card = printable[i + k];
       if(card){
         cell.appendChild(CARD.toCanvas({
           W: CARD_W, H: CARD_H, layout: "landscape",
@@ -283,8 +298,9 @@ function render(cards){
     host.appendChild(sheet);
   }
 
-  var sheets = Math.ceil(cards.length / 4);
-  setStatus(cards.length + (cards.length === 1 ? " card" : " cards") + " on " +
+  var sheets = Math.ceil(printable.length / 4);
+  setStatus(printable.length + (printable.length === 1 ? " printed card" : " printed cards") + " from " +
+            cards.length + (cards.length === 1 ? " sponsorship" : " sponsorships") + " on " +
             sheets + (sheets === 1 ? " sheet" : " sheets") + ".");
   $("#countHd").hidden = false;
   $("#btnPrint").disabled = false;
@@ -338,6 +354,7 @@ $("#btnPaste").addEventListener("click", function(){
 });
 
 $("#filterDay").addEventListener("change", apply);
+$("#copies").addEventListener("change", apply);
 $("#btnPrint").addEventListener("click", function(){ window.print(); });
 
 /* Webfonts must be in before anything is drawn to canvas, or the
