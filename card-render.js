@@ -271,6 +271,88 @@ function drawLandscape(x, o){
   candle(x, W * 0.79, H * 0.26, W * 0.0475, H * 0.5625);
 }
 
+/* ── landscape: ink-saver print card ───────────────────────── */
+function drawLandscapeLight(x, o){
+  var W = o.W, H = o.H;
+  var L = W * 0.07375, textW = W * 0.80;
+
+  x.fillStyle = "#FFFFFF";
+  x.fillRect(0, 0, W, H);
+
+  var inset = W * 0.0275, arm = W * 0.04125;
+  x.strokeStyle = "rgba(166,124,46,.48)";
+  x.lineWidth = Math.max(1, W * 0.0018);
+  roundRect(x, inset, inset, W - inset*2, H - inset*2, inset * 0.4);
+  x.stroke();
+
+  x.strokeStyle = "#A67C2E";
+  x.lineWidth = Math.max(2, W * 0.0024);
+  x.beginPath();
+  x.moveTo(inset, inset + arm); x.lineTo(inset, inset); x.lineTo(inset + arm, inset);
+  x.stroke();
+  x.beginPath();
+  x.moveTo(W - inset, H - inset - arm); x.lineTo(W - inset, H - inset); x.lineTo(W - inset - arm, H - inset);
+  x.stroke();
+
+  x.textAlign = "left";
+  x.textBaseline = "alphabetic";
+
+  var mastY = H * 0.175;
+  x.fillStyle = "#A67C2E";
+  x.font = "700 " + (H * 0.02292) + "px " + FONT_BODY;
+  var kickW = tracked(x, o.kicker, L, mastY, H * 0.0088, "left");
+
+  if(o.slot){
+    var room = W - L*2 - kickW - W * 0.05;
+    var slot = String(o.slot).toUpperCase();
+    var f = fitTracked(x, slot, room, H * 0.0215, H * 0.011,
+                       FONT_BODY, "600", 0.34);
+    x.fillStyle = "#4A5565";
+    tracked(x, slot, W - L - trackedWidth(x, slot, f.spacing), mastY, f.spacing, "left");
+  }
+
+  var hebLine = o.heb ? (o.hebLead ? o.hebLead + " " : "") + o.heb : "";
+  var leadSize = H * 0.035417;
+  var footY = H * 0.8667;
+
+  x.font = "500 " + leadSize + "px " + FONT_DISPLAY;
+  var nameSize = fitFont(x, o.name, textW, H * 0.0875, H * 0.04375, FONT_DISPLAY, "600");
+  var lines = wrapText(x, o.name, textW).slice(0, 3);
+  var hebSize = hebLine ? H * 0.054167 : 0;
+
+  var blockH = leadSize + H * 0.030
+             + lines.length * nameSize * 1.12
+             + (hebLine ? hebSize * 1.30 : 0);
+
+  var bandTop = mastY + H * 0.075, bandBottom = footY - H * 0.055;
+  var y = bandTop + (bandBottom - bandTop - blockH) / 2 + leadSize;
+  if(y < bandTop + leadSize) y = bandTop + leadSize;
+
+  x.fillStyle = "#4A5565";
+  x.font = "600 " + leadSize + "px " + FONT_DISPLAY;
+  tracked(x, String(o.lead).toUpperCase(), L, y, H * 0.0021, "left");
+  y += H * 0.030 + nameSize;
+
+  x.fillStyle = "#111827";
+  x.font = "600 " + nameSize + "px " + FONT_DISPLAY;
+  lines.forEach(function(ln){ x.fillText(ln, L, y); y += nameSize * 1.12; });
+
+  if(hebLine){
+    x.fillStyle = "#A67C2E";
+    x.font = "600 " + hebSize + "px " + FONT_HEBREW;
+    x.direction = "rtl";
+    x.fillText(hebLine, L, y + hebSize * 0.42);
+    x.direction = "ltr";
+  }
+
+  if(o.footer){
+    var ff = fitTracked(x, String(o.footer).toUpperCase(), textW,
+                        H * 0.025, H * 0.014, FONT_BODY, "600", 0.22);
+    x.fillStyle = "#4A5565";
+    tracked(x, String(o.footer).toUpperCase(), L, footY, ff.spacing, "left");
+  }
+}
+
 /* ── portrait: the poster ────────────────────────────────────── */
 function drawPortrait(x, o){
   var W = o.W, H = o.H;
@@ -366,6 +448,7 @@ global.CARD = {
   draw: function(ctx, o){
     ctx.save();
     if(o.layout === "portrait") drawPortrait(ctx, o);
+    else if(o.theme === "light") drawLandscapeLight(ctx, o);
     else drawLandscape(ctx, o);
     ctx.restore();
   },

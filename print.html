@@ -84,6 +84,10 @@
           <option value="2">2 copies each</option>
           <option value="4">4 copies each</option>
         </select>
+        <select id="printTheme">
+          <option value="light">Ink saver light</option>
+          <option value="dark">Full colour dark</option>
+        </select>
         <button type="button" id="btnPrint" disabled>Print</button>
       </div>
       <p class="status" id="status"></p>
@@ -271,6 +275,7 @@ function render(cards){
   }
 
   var printable = withCopies(cards);
+  var theme = $("#printTheme").value;
   for(var i = 0; i < printable.length; i += 4){
     var sheet = document.createElement("div");
     sheet.className = "sheet";
@@ -281,7 +286,7 @@ function render(cards){
       var card = printable[i + k];
       if(card){
         cell.appendChild(CARD.toCanvas({
-          W: CARD_W, H: CARD_H, layout: "landscape",
+          W: CARD_W, H: CARD_H, layout: "landscape", theme: theme,
           kicker:  "YC LEARNING PROGRAM",
           slot:    card.slot,
           lead:    card.lead,
@@ -355,6 +360,7 @@ $("#btnPaste").addEventListener("click", function(){
 
 $("#filterDay").addEventListener("change", apply);
 $("#copies").addEventListener("change", apply);
+$("#printTheme").addEventListener("change", apply);
 $("#btnPrint").addEventListener("click", function(){ window.print(); });
 
 /* Webfonts must be in before anything is drawn to canvas, or the
