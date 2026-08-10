@@ -126,7 +126,7 @@ function todayElul(){
 function scheduled(n, seder){
   var dow = dayDate(n).getDay();
   if(seder === "night") return dow >= 1 && dow <= 4;
-  return dow !== 6;
+  return dow >= 1 && dow <= 5;
 }
 
 function parseTable(text){

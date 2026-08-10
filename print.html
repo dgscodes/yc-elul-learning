@@ -143,7 +143,7 @@ function dayDate(n){
 function scheduled(n, seder){
   var dow = dayDate(n).getDay();
   if(seder === "night") return dow >= 1 && dow <= 4;
-  return dow !== 6;
+  return dow >= 1 && dow <= 5;
 }
 
 /* Accepts CSV or the tab-separated text you get from copying cells. */
