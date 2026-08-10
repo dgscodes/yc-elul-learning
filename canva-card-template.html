@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Elul dedication card — A6 print template</title>
+<!--
+  ═══════════════════════════════════════════════════════════════
+  A6 LANDSCAPE DEDICATION CARD — for import into Canva
+  ═══════════════════════════════════════════════════════════════
+  This is the website's card (see drawCard() in index.html) laid out
+  at print size: 148 x 105 mm, which is A6 landscape — four to an A4
+  landscape sheet.
+
+  Every colour, font and proportion here is lifted from the site, so
+  the printed card and the card on the website are the same object.
+
+  The six text blocks below are the ones Canva Bulk Create connects
+  to spreadsheet columns. They carry sample text on purpose: it shows
+  the designer what belongs in each slot, and Bulk Create replaces it
+  row by row. Keep them as six separate text boxes — merge any two
+  and Canva can only fill them as one field.
+
+  Printing: Canva exports one A6 page per card. Use the print dialog's
+  "4 pages per sheet" to get four cards on one A4 landscape sheet.
+  ═══════════════════════════════════════════════════════════════
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Frank+Ruhl+Libre:wght@400;500;700&family=Inter:wght@400;500;600&display=swap">
+<style>
+  /* Palette, straight from the site's :root. */
+  :root{
+    --night:#070C16;
+    --on-night-2:#B9C4D4;
+    --on-night-3:#7E8CA3;
+    --gold:#D6B26A;
+    --gold-bright:#F0D294;
+    --flame:#FF9E42;
+    --flame-hot:#FFD98A;
+    --font-display:"Cormorant Garamond","Iowan Old Style",Palatino,Georgia,serif;
+    --font-body:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    --font-hebrew:"Frank Ruhl Libre","Times New Roman",serif;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{background:#1a1a1a}
+
+  /* A6 landscape at 300dpi: 148mm x 105mm. */
+  .card{
+    position:relative;width:1748px;height:1240px;overflow:hidden;
+    background:linear-gradient(160deg,#0E1626 0%,#070C16 55%,#0B111E 100%);
+    font-family:var(--font-body);
+  }
+
+  /* The warm cast the candle throws across the card. */
+  .glow{
+    position:absolute;left:79%;top:30%;width:1200px;height:1200px;
+    transform:translate(-50%,-50%);pointer-events:none;
+    background:radial-gradient(circle,
+      rgba(255,190,110,.30) 0%,
+      rgba(255,150,70,.10) 45%,
+      rgba(255,150,70,0) 70%);
+  }
+
+  /* Hairline rule inset from the trim, with a heavier gold bracket at
+     two opposite corners — the site's signature. */
+  .frame{position:absolute;inset:48px;border:2px solid rgba(214,178,106,.42);border-radius:20px;pointer-events:none}
+  .frame::before,.frame::after{
+    content:"";position:absolute;width:72px;height:72px;border:5px solid rgba(214,178,106,.9);
+  }
+  .frame::before{top:-2px;left:-2px;border-right:0;border-bottom:0;border-radius:18px 0 0 0}
+  .frame::after{bottom:-2px;right:-2px;border-left:0;border-top:0;border-radius:0 0 18px 0}
+
+  .inner{
+    position:relative;height:100%;display:flex;flex-direction:column;
+    padding:135px 130px;
+  }
+  .body{flex:1;display:grid;grid-template-columns:1fr auto;align-items:center;gap:70px;min-height:0}
+  .left{min-width:0;display:flex;flex-direction:column;justify-content:center}
+
+  /* ── The Bulk Create fields ────────────────────────────────── */
+
+  /* Masthead: the programme on the left, the slot this card belongs
+     to on the right, so a stack of printed cards can be sorted. */
+  .top{display:flex;justify-content:space-between;align-items:baseline;gap:40px}
+  .kicker{
+    font-size:28px;font-weight:600;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--gold);
+  }
+  .when{
+    font-size:26px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--gold-bright);opacity:.75;white-space:nowrap;
+  }
+  .lead{
+    font-family:var(--font-display);font-size:46px;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--on-night-2);margin-bottom:18px;
+  }
+  .name{
+    font-family:var(--font-display);font-weight:500;font-size:112px;line-height:1.12;
+    letter-spacing:-.01em;color:#fff;overflow-wrap:anywhere;
+  }
+  .hebrew{
+    font-family:var(--font-hebrew);direction:rtl;text-align:left;font-size:68px;
+    line-height:1.45;color:var(--gold-bright);margin-top:34px;overflow-wrap:anywhere;
+  }
+  .footer{
+    font-size:30px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--on-night-3);
+  }
+
+  /* ── Candle ────────────────────────────────────────────────── */
+  .candle{position:relative;width:84px;height:620px;flex:none;align-self:center}
+  .candle__body{
+    position:absolute;bottom:0;left:0;right:0;height:100%;border-radius:9px 9px 5px 5px;
+    background:linear-gradient(90deg,
+      rgba(226,214,190,.85) 0%,#FFFDF6 38%,#FFF8E8 62%,rgba(214,200,175,.8) 100%);
+    box-shadow:0 0 40px rgba(255,220,160,.25), inset 0 -24px 34px -20px rgba(140,110,60,.5);
+  }
+  .candle__body::after{
+    content:"";position:absolute;inset:0 0 auto 0;height:22%;border-radius:9px 9px 0 0;
+    background:linear-gradient(180deg,rgba(255,214,150,.8),rgba(255,214,150,0));
+  }
+  .candle__wick{
+    position:absolute;top:-15px;left:50%;transform:translateX(-50%);
+    width:4px;height:19px;background:#2A2118;border-radius:3px;z-index:2;
+  }
+  .candle__flame{
+    position:absolute;top:-68px;left:50%;transform:translateX(-50%);
+    width:30px;height:66px;z-index:3;
+    border-radius:50% 50% 40% 40% / 62% 62% 38% 38%;
+    background:radial-gradient(ellipse at 50% 78%,
+      #FFFFFF 0%,#FFF0C0 22%,var(--flame-hot) 42%,var(--flame) 68%,
+      rgba(232,106,44,.35) 92%,transparent 100%);
+    box-shadow:0 0 42px rgba(255,180,90,.85), 0 0 100px rgba(255,140,50,.5);
+  }
+  .candle__glow{
+    position:absolute;top:-160px;left:50%;transform:translateX(-50%);
+    width:330px;height:330px;z-index:1;pointer-events:none;
+    background:radial-gradient(circle,
+      rgba(255,190,110,.28) 0%,rgba(255,150,70,.12) 38%,transparent 68%);
+  }
+</style>
+</head>
+<body>
+
+<div class="card" data-document-role="page" data-label="Elul dedication card">
+  <div class="glow"></div>
+  <div class="frame"></div>
+
+  <div class="inner">
+    <div class="top">
+      <p class="kicker">YC Learning Program · Elul 5786</p>
+      <p class="when">4 Elul 5786 · Morning Seder</p>
+    </div>
+
+    <div class="body">
+      <div class="left">
+        <p class="lead">In memory of</p>
+        <p class="name">Ben Tzion ben Ze'ev Avraham Ha'Levi</p>
+        <p class="hebrew">לעילוי נשמת בן ציון בן זאב אברהם הלוי</p>
+      </div>
+
+      <div class="candle">
+        <div class="candle__glow"></div>
+        <div class="candle__flame"></div>
+        <div class="candle__wick"></div>
+        <div class="candle__body"></div>
+      </div>
+    </div>
+
+    <p class="footer">Sponsored by the Simon family</p>
+  </div>
+</div>
+
+</body>
+</html>

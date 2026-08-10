@@ -426,6 +426,11 @@ dialog.sheet::backdrop{background:rgba(4,8,15,.72);backdrop-filter:blur(6px)}
 .f input:focus,.f select:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(214,178,106,.2);background:#fff}
 .f input.heb{font-family:var(--font-hebrew);direction:rtl;text-align:right;font-size:1.05rem}
 .f__hint{font-size:.74rem;color:var(--ink-3);margin-top:.4rem}
+/* "Did you mean …" under the email field. No display property here —
+   the hidden attribute does the hiding. */
+.f__fix{font-size:.78rem;color:var(--ink-2);margin-top:.45rem;line-height:1.5}
+.f__fix button{font:inherit;color:var(--gold-deep);font-weight:600;text-decoration:underline;text-underline-offset:2px}
+.f__fix button:hover{color:var(--ink)}
 .seg{display:grid;grid-template-columns:repeat(2,1fr);gap:.4rem}
 @media (min-width:420px){.seg{grid-template-columns:repeat(3,1fr)}}
 @media (min-width:660px){.seg{grid-template-columns:repeat(5,1fr)}}
@@ -567,6 +572,9 @@ dialog.sheet::backdrop{background:rgba(4,8,15,.72);backdrop-filter:blur(6px)}
 .mcard__type{font-family:var(--font-display);font-size:clamp(.82rem,2.1vw,1rem);letter-spacing:.06em;text-transform:uppercase;color:var(--on-night-2);margin-bottom:.35rem}
 .mcard__name{font-family:var(--font-display);font-weight:500;font-size:clamp(1.25rem,4.4vw,2.1rem);color:#fff;line-height:1.15;letter-spacing:-.01em;overflow-wrap:anywhere}
 .mcard__heb{font-family:var(--font-hebrew);direction:rtl;text-align:left;font-size:clamp(.95rem,3vw,1.4rem);color:var(--gold-bright);margin-top:.5rem;line-height:1.5;text-shadow:0 0 20px rgba(240,210,148,.3);overflow-wrap:anywhere}
+/* Empty state: a rule where the Hebrew name will go, dimmed so it reads
+   as a blank to fill, never as part of the dedication. */
+.mcard__heb.is-ph{opacity:.42}
 .mcard__ft{margin-top:clamp(.7rem,2.5%,1.2rem);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--on-night-3)}
 
 @media (max-width:560px){          /* give the card room to breathe on a phone */
@@ -1022,6 +1030,7 @@ footer a:hover{color:var(--gold-bright)}
           <div class="f">
             <label for="fEmail">Email</label>
             <input id="fEmail" type="email" autocomplete="email" maxlength="120" required>
+            <p class="f__fix" id="emailFix" hidden>Did you mean <button type="button" id="emailFixBtn"></button>?</p>
           </div>
           <div class="f">
             <label for="fPhone">Phone</label>
@@ -1103,7 +1112,7 @@ footer a:hover{color:var(--gold-bright)}
                 <p class="mcard__kicker">YC Learning Program · Elul 5786</p>
                 <p class="mcard__type" id="mType">In memory of</p>
                 <p class="mcard__name" id="mName">Name for the dedication</p>
-                <p class="mcard__heb" id="mHeb">השם יופיע כאן</p>
+                <p class="mcard__heb is-ph" id="mHeb">לעילוי נשמת ———</p>
                 <p class="mcard__ft" id="mFrom">Today's learning is dedicated in their name</p>
               </div>
               <div class="candle" aria-hidden="true">
@@ -1332,6 +1341,9 @@ footer a:hover{color:var(--gold-bright)}
 </div>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<!-- The card artwork, shared with print.html and poster.html. -->
+<script src="card-render.js"></script>
 
 <script>
 (function(){
@@ -1776,7 +1788,10 @@ sheet.addEventListener("click", e => { if(e.target === sheet) sheet.close(); });
 const state = { type:"iluy", name:"", heb:"", from:"", other:"" };
 const mType = $("#mType"), mName = $("#mName"), mHeb = $("#mHeb"), mFrom = $("#mFrom");
 
-const PLACEHOLDER = { name:"Name for the dedication", heb:"השם יופיע כאן" };
+/* The Hebrew blank is a rule, not words. Filler text here gets read as
+   part of the dedication — and "השם" on its own is HaShem, which is not
+   something to print after "לעילוי נשמת". */
+const PLACEHOLDER = { name:"Name for the dedication", heb:"———" };
 
 /* The lead line on the card. For "other" it's whatever they typed. */
 function leadLine(){
@@ -1787,10 +1802,12 @@ function leadLine(){
 function render(){
   const t = TYPES[state.type];
   const name = state.name.trim() || PLACEHOLDER.name;
-  const heb  = state.heb.trim()  || (state.name.trim() ? "" : PLACEHOLDER.heb);
+  const isPh = !state.heb.trim() && !state.name.trim();
+  const heb  = state.heb.trim()  || (isPh ? PLACEHOLDER.heb : "");
   mType.textContent = leadLine();
   mName.textContent = name;
   mHeb.textContent  = t.heb ? (heb ? t.heb + " " + heb : t.heb) : heb;
+  mHeb.classList.toggle("is-ph", isPh);
   mFrom.textContent = $("#fAnon") && $("#fAnon").checked
     ? "Sponsored anonymously"
     : (state.from.trim()
@@ -1922,6 +1939,99 @@ if(!CONFIG.endpoint){
   $("#payNote").textContent = "To reserve a seder, please call +27 66 433 5434. Payment details are shown above.";
 }
 
+/* ── email typo catch ─────────────────────────────────────────
+   The confirmation — with the banking details and the reference —
+   goes to whatever they type here. One wrong character and they
+   never get it, and we never find out. type="email" won't help:
+   ".con" is a perfectly valid address as far as the browser is
+   concerned. So we check the domain against the ones people
+   actually use, and offer the correction.
+
+   It only ever warns. Unusual domains are real, and a wrong guess
+   must never stop someone reserving a seder.
+   ─────────────────────────────────────────────────────────── */
+const MAIL_DOMAINS = [
+  "gmail.com","googlemail.com","icloud.com","me.com","mac.com",
+  "outlook.com","hotmail.com","live.com","msn.com",
+  "yahoo.com","yahoo.co.uk","ymail.com","aol.com",
+  "protonmail.com","proton.me",
+  /* Local providers — most of this list will be South African. */
+  "mweb.co.za","telkomsa.net","webmail.co.za","vodamail.co.za",
+  "absamail.co.za","iafrica.com"
+];
+
+/* Endings that are never right, on any domain. ".co" is missing on
+   purpose — it's a real TLD people do use; "gmail.co" gets caught
+   below as a near-miss instead. */
+const BAD_TLDS = ["con","cpm","cmo","ocm","comm","coom","cim","cm","xom","vom"];
+
+/* Damerau-Levenshtein: counts a swapped pair as one slip, so
+   "gmial" and "gmail.cmo" are each one edit out, not two. */
+function editDist(a,b){
+  const m = a.length, n = b.length;
+  const d = Array.from({length:m+1}, (_,i)=>
+    Array.from({length:n+1}, (_,j)=> i === 0 ? j : (j === 0 ? i : 0)));
+  for(let i=1;i<=m;i++){
+    for(let j=1;j<=n;j++){
+      const c = a.charAt(i-1) === b.charAt(j-1) ? 0 : 1;
+      d[i][j] = Math.min(d[i-1][j] + 1, d[i][j-1] + 1, d[i-1][j-1] + c);
+      if(i > 1 && j > 1 && a.charAt(i-1) === b.charAt(j-2) && a.charAt(i-2) === b.charAt(j-1)){
+        d[i][j] = Math.min(d[i][j], d[i-2][j-2] + 1);
+      }
+    }
+  }
+  return d[m][n];
+}
+
+/* Returns a corrected address, or "" if it looks fine (or if we
+   have no confident guess — silence beats a wrong suggestion). */
+function suggestEmail(value){
+  const raw = String(value || "").trim();
+  const at = raw.lastIndexOf("@");
+  if(at < 1 || at === raw.length - 1) return "";
+
+  /* Only the domain is case-insensitive, so leave their local part
+     exactly as they typed it. */
+  const local = raw.slice(0, at), domain = raw.slice(at + 1).toLowerCase();
+  if(MAIL_DOMAINS.indexOf(domain) !== -1) return "";
+
+  /* No dot at all is always wrong, but there's no ending to fix —
+     fall through to the near-miss check, which catches "gmailcom". */
+  const dot = domain.lastIndexOf(".");
+  if(dot !== -1 && BAD_TLDS.indexOf(domain.slice(dot + 1)) !== -1){
+    return local + "@" + domain.slice(0, dot) + ".com";
+  }
+
+  /* Short domains are too easy to match by accident, so only the
+     long ones get the fuzzy check. */
+  if(domain.length >= 7){
+    for(let i=0;i<MAIL_DOMAINS.length;i++){
+      if(editDist(domain, MAIL_DOMAINS[i]) === 1) return local + "@" + MAIL_DOMAINS[i];
+    }
+  }
+  return "";
+}
+
+const emailEl = $("#fEmail"), emailFix = $("#emailFix"), emailFixBtn = $("#emailFixBtn");
+let emailWarned = "";
+
+function checkEmail(){
+  const s = suggestEmail(emailEl.value);
+  if(s){ emailFixBtn.textContent = s; emailFix.hidden = false; }
+  else  { emailFix.hidden = true; }
+  return s;
+}
+
+/* Check once they've moved on, not while they're mid-address. */
+emailEl.addEventListener("blur", checkEmail);
+emailEl.addEventListener("input", ()=>{ emailFix.hidden = true; });
+
+emailFixBtn.addEventListener("click", ()=>{
+  emailEl.value = emailFixBtn.textContent;
+  emailFix.hidden = true;
+  emailEl.focus();
+});
+
 formEl.addEventListener("submit", function(ev){
   ev.preventDefault();
   setStatus("");
@@ -1951,6 +2061,17 @@ formEl.addEventListener("submit", function(ev){
 
   if(!payload.sponsorName){ setStatus("Please add your name."); $("#fSponsorName").focus(); return; }
   if(!payload.sponsorEmail){ setStatus("Please add an email — that's where your confirmation goes."); $("#fEmail").focus(); return; }
+
+  /* Warn once, then take them at their word. */
+  const fix = checkEmail();
+  if(fix && emailWarned !== payload.sponsorEmail.toLowerCase()){
+    emailWarned = payload.sponsorEmail.toLowerCase();
+    setStatus("That email looks like it might have a typo — did you mean " + fix +
+              "? Correct it above, or press Reserve again to use what you typed.");
+    emailEl.focus();
+    return;
+  }
+
   if(!payload.sponsorPhone){ setStatus("Please add a phone number so we can reach you about the dedication."); $("#fPhone").focus(); return; }
   if(seder === "both" ? scheduledSedarim(n).length !== 2 : !isSederScheduled(n, seder)){
     setStatus("That learning slot is not scheduled. Please choose a weekday morning, or a Monday-Thursday night.");
@@ -2203,159 +2324,33 @@ $("#btnDownload").addEventListener("click", ()=>{
   try{ drawCard(); } catch(err){ toast("Could not generate the image on this browser"); }
 });
 
-function roundRect(ctx,x,y,w,h,r){
-  ctx.beginPath();
-  ctx.moveTo(x+r,y);
-  ctx.arcTo(x+w,y,x+w,y+h,r);
-  ctx.arcTo(x+w,y+h,x,y+h,r);
-  ctx.arcTo(x,y+h,x,y,r);
-  ctx.arcTo(x,y,x+w,y,r);
-  ctx.closePath();
-}
-
+/* ── download card as PNG ──────────────────────────────────────
+   The drawing itself lives in card-render.js, shared with the print
+   sheet and the poster, so all three stay the same design. */
 function drawCard(){
-  const W = 1600, H = 960;
-  const c = document.createElement("canvas");
-  c.width = W; c.height = H;
-  const x = c.getContext("2d");
   const t = TYPES[state.type];
   const name = state.name.trim() || PLACEHOLDER.name;
-  const heb  = state.heb.trim();
 
-  /* background */
-  const bg = x.createLinearGradient(0,0,W,H);
-  bg.addColorStop(0,"#0E1626"); bg.addColorStop(.55,"#070C16"); bg.addColorStop(1,"#0B111E");
-  x.fillStyle = bg; x.fillRect(0,0,W,H);
+  const canvas = CARD.toCanvas({
+    W: 1600, H: 960, layout: "landscape",
+    kicker:  "YC LEARNING PROGRAM  ·  ELUL 5786",
+    lead:    leadLine(),
+    name:    name,
+    hebLead: t.heb,
+    heb:     state.heb.trim(),
+    footer:  $("#fAnon") && $("#fAnon").checked
+               ? "Sponsored anonymously"
+               : (state.from.trim()
+                   ? "Sponsored by " + state.from.trim()
+                   : "Today's learning is dedicated in their name")
+  });
 
-  /* candle glow behind */
-  const gl = x.createRadialGradient(W*0.79, H*0.30, 10, W*0.79, H*0.30, 460);
-  gl.addColorStop(0,"rgba(255,190,110,.30)");
-  gl.addColorStop(.45,"rgba(255,150,70,.10)");
-  gl.addColorStop(1,"rgba(255,150,70,0)");
-  x.fillStyle = gl; x.fillRect(0,0,W,H);
-
-  /* frame */
-  x.strokeStyle = "rgba(214,178,106,.42)"; x.lineWidth = 2;
-  roundRect(x, 44, 44, W-88, H-88, 18); x.stroke();
-  x.strokeStyle = "rgba(214,178,106,.9)"; x.lineWidth = 4;
-  x.beginPath(); x.moveTo(44,110); x.lineTo(44,44); x.lineTo(110,44); x.stroke();
-  x.beginPath(); x.moveTo(W-44,H-110); x.lineTo(W-44,H-44); x.lineTo(W-110,H-44); x.stroke();
-
-  const L = 118, textW = W*0.60;
-
-  /* kicker */
-  x.textAlign = "left"; x.textBaseline = "alphabetic";
-  x.fillStyle = "#D6B26A";
-  x.font = "600 22px Inter, Helvetica, Arial, sans-serif";
-  x.fillText("YC LEARNING PROGRAM  ·  ELUL 5786".split("").join(" "), L, 168);
-
-  /* type */
-  x.fillStyle = "#B9C4D4";
-  x.font = "500 34px 'Cormorant Garamond', Georgia, serif";
-  x.fillText(leadLine().toUpperCase(), L, 300);
-
-  /* name (wrapped) */
-  x.fillStyle = "#FFFFFF";
-  let size = 84;
-  x.font = `500 ${size}px 'Cormorant Garamond', Georgia, serif`;
-  while(x.measureText(name).width > textW && size > 42){
-    size -= 4;
-    x.font = `500 ${size}px 'Cormorant Garamond', Georgia, serif`;
-  }
-  const lines = wrapText(x, name, textW);
-  let y = 390;
-  lines.slice(0,3).forEach(ln=>{ x.fillText(ln, L, y); y += size * 1.12; });
-
-  /* hebrew */
-  if(heb){
-    x.fillStyle = "#F0D294";
-    x.font = "500 52px 'Frank Ruhl Libre', 'Times New Roman', serif";
-    x.direction = "rtl";
-    x.textAlign = "left";
-    const hebLine = (t.heb ? t.heb + " " : "") + heb;
-    x.fillText(hebLine, L, y + 34);
-    x.direction = "ltr";
-    y += 90;
-  }
-
-  /* footer line */
-  x.fillStyle = "#7E8CA3";
-  x.textAlign = "left";
-  x.font = "500 24px Inter, Helvetica, Arial, sans-serif";
-  const foot = state.from.trim() ? "SPONSORED BY " + state.from.trim().toUpperCase()
-                                 : "TODAY'S LEARNING IS DEDICATED IN THEIR NAME";
-  x.fillText(foot.split("").join(" "), L, H - 128);
-
-  /* candle */
-  drawCandle(x, W*0.79, H*0.26, 76, 540);
-
-  const url = c.toDataURL("image/png");
   const a = document.createElement("a");
-  a.href = url;
-  a.download = "elul-dedication-" + (state.name.trim() || "card").replace(/[^a-z0-9]+/gi,"-").toLowerCase() + ".png";
+  a.href = canvas.toDataURL("image/png");
+  a.download = "elul-dedication-" +
+    (state.name.trim() || "card").replace(/[^a-z0-9]+/gi,"-").toLowerCase() + ".png";
   document.body.appendChild(a); a.click(); a.remove();
   toast("Card downloaded");
-}
-
-function wrapText(ctx, text, maxW){
-  const words = text.split(/\s+/), lines = [];
-  let line = "";
-  words.forEach(w=>{
-    const test = line ? line + " " + w : w;
-    if(ctx.measureText(test).width > maxW && line){ lines.push(line); line = w; }
-    else line = test;
-  });
-  if(line) lines.push(line);
-  return lines;
-}
-
-function drawCandle(x, cx, top, w, h){
-  /* body */
-  const body = x.createLinearGradient(cx - w/2, 0, cx + w/2, 0);
-  body.addColorStop(0,"rgba(226,214,190,.9)");
-  body.addColorStop(.38,"#FFFDF6");
-  body.addColorStop(.62,"#FFF8E8");
-  body.addColorStop(1,"rgba(206,192,166,.9)");
-  x.fillStyle = body;
-  roundRect(x, cx - w/2, top, w, h, 8); x.fill();
-
-  /* specular highlight — reads as a cylinder */
-  const spec = x.createLinearGradient(cx - w*0.30, 0, cx - w*0.06, 0);
-  spec.addColorStop(0, "rgba(255,255,255,0)");
-  spec.addColorStop(.55, "rgba(255,255,255,.55)");
-  spec.addColorStop(1, "rgba(255,255,255,0)");
-  x.fillStyle = spec;
-  roundRect(x, cx - w*0.30, top + 8, w*0.24, h - 16, 6); x.fill();
-
-  /* melted rim + warm pool of light at the top of the wax */
-  const rim = x.createLinearGradient(0, top, 0, top + 34);
-  rim.addColorStop(0, "rgba(255,214,150,.85)");
-  rim.addColorStop(1, "rgba(255,214,150,0)");
-  x.fillStyle = rim;
-  roundRect(x, cx - w/2, top, w, 34, 8); x.fill();
-
-  /* wick */
-  x.fillStyle = "#2A2118";
-  x.fillRect(cx - 2.5, top - 22, 5, 24);
-
-  /* flame */
-  const fg = x.createRadialGradient(cx, top - 40, 2, cx, top - 40, 74);
-  fg.addColorStop(0,"#FFFFFF");
-  fg.addColorStop(.16,"#FFF0C0");
-  fg.addColorStop(.34,"#FFD98A");
-  fg.addColorStop(.58,"#FF9E42");
-  fg.addColorStop(.85,"rgba(232,106,44,.35)");
-  fg.addColorStop(1,"rgba(232,106,44,0)");
-  x.fillStyle = fg;
-  x.beginPath();
-  x.ellipse(cx, top - 50, 34, 76, 0, 0, Math.PI*2);
-  x.fill();
-
-  /* hot core */
-  x.fillStyle = "rgba(255,255,255,.92)";
-  x.beginPath();
-  x.ellipse(cx, top - 40, 11, 30, 0, 0, Math.PI*2);
-  x.fill();
 }
 
 /* ════════════════════════════════════════════════════════════

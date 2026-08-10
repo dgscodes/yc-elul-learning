@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Print dedication cards · YC Elul</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Frank+Ruhl+Libre:wght@400;500;700&family=Inter:wght@300;400;500;600&display=swap">
+<style>
+  :root{
+    --night:#070C16; --night-1:#0A101C; --night-2:#101A2C;
+    --gold:#D6B26A; --gold-bright:#F0D294; --gold-deep:#A67C2E;
+    --on-night:#F2ECDF; --on-night-2:#B9C4D4; --on-night-3:#7E8CA3;
+    --rule:rgba(214,178,106,.2);
+    --body:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    --display:"Cormorant Garamond",Georgia,serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--night);color:var(--on-night);font-family:var(--body);font-size:15px;line-height:1.6}
+  .wrap{max-width:1100px;margin:0 auto;padding:2.5rem 1.4rem 5rem}
+
+  h1{font-family:var(--display);font-weight:500;font-size:2.1rem;margin:0 0 .3rem;letter-spacing:-.01em}
+  .sub{color:var(--on-night-3);margin:0 0 2rem;font-size:.95rem}
+  h2{font-size:.72rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin:2.4rem 0 .8rem}
+
+  .panel{background:var(--night-1);border:1px solid var(--rule);border-radius:12px;padding:1.3rem 1.4rem}
+  .row{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center}
+  button,select{
+    font:inherit;font-size:.86rem;padding:.6rem 1.1rem;border-radius:8px;
+    border:1px solid var(--rule);background:var(--night-2);color:var(--on-night);cursor:pointer;
+  }
+  button:hover,select:hover{border-color:var(--gold)}
+  button.primary{background:linear-gradient(150deg,var(--gold-bright),var(--gold));color:#231705;border-color:transparent;font-weight:600}
+  button:disabled{opacity:.45;cursor:not-allowed}
+  button:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+  textarea{
+    width:100%;min-height:150px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.78rem;
+    background:#050912;color:var(--on-night-2);border:1px solid var(--rule);border-radius:8px;padding:.8rem;resize:vertical;
+  }
+  .hint{font-size:.82rem;color:var(--on-night-3);margin:.5rem 0 0}
+  .status{margin-top:.9rem;font-size:.88rem;color:var(--gold-bright);min-height:1.3em}
+
+  /* On screen the sheets are shown as pages so you can see the
+     4-up layout before committing paper to it. */
+  .sheet{
+    background:#000;margin:1.4rem auto;border:1px solid var(--rule);border-radius:6px;
+    display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;
+    width:100%;max-width:1000px;aspect-ratio:297/210;overflow:hidden;
+  }
+  .sheet canvas{width:100%;height:100%;display:block}
+  .cell{position:relative;overflow:hidden;background:var(--night)}
+  .cell--empty{background:#05080f}
+
+  @media print{
+    @page{ size:A4 landscape; margin:0 }
+    body{background:#fff}
+    .noprint{display:none !important}
+    .wrap{max-width:none;padding:0;margin:0}
+    .sheet{
+      margin:0;border:0;border-radius:0;width:100%;height:100vh;
+      max-width:none;aspect-ratio:auto;break-after:page;page-break-after:always;
+    }
+    .sheet:last-child{break-after:auto;page-break-after:auto}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="noprint">
+    <h1>Print dedication cards</h1>
+    <p class="sub">Every sponsorship, drawn with the same code as the card on the website, four to an A4 landscape sheet. Cut once across and once down.</p>
+
+    <h2>Where the sponsorships come from</h2>
+    <div class="panel">
+      <div class="row">
+        <button type="button" id="btnLoad" class="primary">Load from the live sheet</button>
+        <select id="filterDay"><option value="">Every day of Elul</option></select>
+        <button type="button" id="btnPrint" disabled>Print</button>
+      </div>
+      <p class="status" id="status"></p>
+      <p class="hint">
+        The live feed carries what the website shows publicly. If it's missing sponsor
+        lines — or you'd rather not depend on it — paste the rows straight from the
+        <strong>Sponsorships</strong> tab instead, including the header row.
+      </p>
+      <details style="margin-top:.9rem">
+        <summary style="cursor:pointer;font-size:.86rem;color:var(--gold-deep)">Paste from the sheet instead</summary>
+        <p class="hint" style="margin:.7rem 0">
+          Select the whole Sponsorships tab, copy, and paste here. Tabs or commas both work.
+        </p>
+        <textarea id="paste" spellcheck="false" placeholder="Timestamp	Reference	Elul Day	Date	Seder	Dedication Type	Name	Hebrew Name	…"></textarea>
+        <div class="row" style="margin-top:.7rem">
+          <button type="button" id="btnPaste">Use these rows</button>
+        </div>
+      </details>
+    </div>
+
+    <h2 id="countHd" hidden>Sheets</h2>
+  </div>
+
+  <div id="sheets"></div>
+
+</div>
+
+<script src="card-render.js"></script>
+<script>
+(function(){
+"use strict";
+
+/* Same feed the website's board reads. */
+var FEED = "https://script.google.com/macros/s/AKfycbyxLZ54K7FTOmK42yDkjT49EiK2_H1TEAWH12cxN6auvGLDBT_wA8d5lw59XaSyB0sK/exec";
+
+var ELUL_START = new Date(2026, 7, 14);   /* 1 Elul 5786 */
+var ELUL_DAYS  = 29;
+
+/* The English lead the sheet stores, and the Hebrew that belongs with
+   it. Keyed on what the form writes, so it matches row for row. */
+var LEADS = [
+  ["in memory of",               "In memory of",               "לעילוי נשמת"],
+  ["for the refuah shleimah of", "For the refuah shleimah of", "לרפואה שלמה"],
+  ["in honour of",               "In honour of",               "לכבוד"],
+  ["for the hatzlacha of",       "For the hatzlacha of",       "להצלחת"],
+  ["in gratitude for",           "In gratitude for",           ""]
+];
+
+var $ = function(s){ return document.querySelector(s); };
+var statusEl = $("#status");
+var rows = [];
+
+function setStatus(msg){ statusEl.textContent = msg || ""; }
+
+function dayDate(n){
+  var d = new Date(ELUL_START);
+  d.setDate(d.getDate() + (n - 1));
+  return d;
+}
+
+/* Friday and Shabbos have no night seder; Friday morning still runs. */
+function scheduled(n, seder){
+  var dow = dayDate(n).getDay();
+  if(seder === "night") return dow >= 1 && dow <= 4;
+  return dow !== 6;
+}
+
+/* Accepts CSV or the tab-separated text you get from copying cells. */
+function parseTable(text){
+  var delim = text.indexOf("\t") > -1 && text.indexOf("\t") < (text.indexOf(",") === -1 ? Infinity : text.indexOf(","))
+    ? "\t" : ",";
+  var out = [], row = [], field = "", q = false, i, c;
+  for(i = 0; i < text.length; i++){
+    c = text[i];
+    if(q){
+      if(c === '"'){ if(text[i+1] === '"'){ field += '"'; i++; } else q = false; }
+      else field += c;
+    }
+    else if(c === '"') q = true;
+    else if(c === delim){ row.push(field); field = ""; }
+    else if(c === "\n"){ row.push(field); out.push(row); row = []; field = ""; }
+    else if(c !== "\r") field += c;
+  }
+  if(field !== "" || row.length){ row.push(field); out.push(row); }
+  if(out.length < 2) return [];
+
+  var head = out.shift().map(function(h){ return h.trim().toLowerCase(); });
+  return out.filter(function(r){
+    return r.some(function(v){ return v.trim() !== ""; });
+  }).map(function(r){
+    var o = {};
+    head.forEach(function(h, k){ o[h] = (r[k] || "").trim(); });
+    return o;
+  });
+}
+
+/* Header names vary between the public feed and the raw sheet, so
+   every field is looked up by any of the names it might carry. */
+function pick(o, names){
+  for(var i = 0; i < names.length; i++){
+    var k = names[i].toLowerCase();
+    if(o[k] !== undefined && String(o[k]).trim() !== "") return String(o[k]).trim();
+  }
+  return "";
+}
+
+function leadPair(raw){
+  var v = String(raw || "").toLowerCase().trim();
+  for(var i = 0; i < LEADS.length; i++){
+    if(LEADS[i][0] === v) return { en: LEADS[i][1], heb: LEADS[i][2] };
+  }
+  /* A custom "other" dedication: print it as written, no Hebrew lead. */
+  return { en: raw ? String(raw).trim() : "In memory of", heb: "" };
+}
+
+function sederLabel(raw){
+  var v = String(raw || "").toLowerCase();
+  if(v.indexOf("night") > -1) return ["night"];
+  if(v.indexOf("both") > -1)  return ["morning", "night"];
+  return ["morning"];
+}
+
+function toCards(list){
+  var cards = [];
+  list.forEach(function(r){
+    var n = parseInt(pick(r, ["elul day", "day"]), 10);
+    var name = pick(r, ["name", "dedication name"]);
+    if(!(n >= 1 && n <= ELUL_DAYS) || !name) return;
+
+    var lead = leadPair(pick(r, ["dedication type", "type", "lead"]));
+    var anon = /^y/i.test(pick(r, ["anonymous"]));
+    var from = pick(r, ["sponsored by", "from"]);
+
+    sederLabel(pick(r, ["seder"])).forEach(function(s){
+      if(!scheduled(n, s)) return;
+      cards.push({
+        day: n,
+        seder: s,
+        lead: lead.en,
+        hebLead: lead.heb,
+        name: name,
+        heb: pick(r, ["hebrew name", "heb"]),
+        footer: anon ? "Sponsored anonymously"
+              : (from ? "Sponsored by " + from
+                      : "Today's learning is dedicated in their name"),
+        slot: n + " Elul 5786  ·  " + (s === "night" ? "Night Seder" : "Morning Seder")
+      });
+    });
+  });
+
+  cards.sort(function(a, b){
+    return a.day - b.day || (a.seder === "morning" ? -1 : 1);
+  });
+  return cards;
+}
+
+/* A6 landscape at 300dpi — four of these tile an A4 landscape sheet
+   exactly, which is why the grid below is 2x2 and not something that
+   needs margins fiddled with. */
+var CARD_W = 1748, CARD_H = 1240;
+
+function render(cards){
+  var host = $("#sheets");
+  host.innerHTML = "";
+
+  if(!cards.length){
+    setStatus("No sponsorships to print yet.");
+    $("#btnPrint").disabled = true;
+    $("#countHd").hidden = true;
+    return;
+  }
+
+  for(var i = 0; i < cards.length; i += 4){
+    var sheet = document.createElement("div");
+    sheet.className = "sheet";
+
+    for(var k = 0; k < 4; k++){
+      var cell = document.createElement("div");
+      cell.className = "cell";
+      var card = cards[i + k];
+      if(card){
+        cell.appendChild(CARD.toCanvas({
+          W: CARD_W, H: CARD_H, layout: "landscape",
+          kicker:  "YC LEARNING PROGRAM",
+          slot:    card.slot,
+          lead:    card.lead,
+          name:    card.name,
+          hebLead: card.hebLead,
+          heb:     card.heb,
+          footer:  card.footer
+        }));
+      } else {
+        cell.className += " cell--empty";
+      }
+      sheet.appendChild(cell);
+    }
+    host.appendChild(sheet);
+  }
+
+  var sheets = Math.ceil(cards.length / 4);
+  setStatus(cards.length + (cards.length === 1 ? " card" : " cards") + " on " +
+            sheets + (sheets === 1 ? " sheet" : " sheets") + ".");
+  $("#countHd").hidden = false;
+  $("#btnPrint").disabled = false;
+}
+
+function fillDayFilter(cards){
+  var sel = $("#filterDay");
+  var seen = {};
+  sel.innerHTML = '<option value="">Every day of Elul</option>';
+  cards.forEach(function(c){
+    if(seen[c.day]) return;
+    seen[c.day] = true;
+    var o = document.createElement("option");
+    o.value = String(c.day);
+    o.textContent = c.day + " Elul";
+    sel.appendChild(o);
+  });
+}
+
+var allCards = [];
+function apply(){
+  var d = $("#filterDay").value;
+  render(d ? allCards.filter(function(c){ return String(c.day) === d; }) : allCards);
+}
+
+function load(list){
+  allCards = toCards(list);
+  fillDayFilter(allCards);
+  apply();
+}
+
+$("#btnLoad").addEventListener("click", function(){
+  setStatus("Loading…");
+  fetch(FEED, { cache: "no-store" })
+    .then(function(r){ return r.ok ? r.text() : Promise.reject(r.status); })
+    .then(function(txt){
+      var list = txt.trim().charAt(0) === "[" ? JSON.parse(txt) : parseTable(txt);
+      load(list);
+    })
+    .catch(function(){
+      setStatus("Couldn't reach the live sheet. Paste the rows in instead — it works offline and always has the sponsor lines.");
+    });
+});
+
+$("#btnPaste").addEventListener("click", function(){
+  var txt = $("#paste").value.trim();
+  if(!txt){ setStatus("Paste the rows first, including the header row."); return; }
+  var list = parseTable(txt);
+  if(!list.length){ setStatus("Couldn't read that — make sure the header row is included."); return; }
+  load(list);
+});
+
+$("#filterDay").addEventListener("change", apply);
+$("#btnPrint").addEventListener("click", function(){ window.print(); });
+
+/* Webfonts must be in before anything is drawn to canvas, or the
+   cards render in Times and nobody notices until they're printed. */
+if(document.fonts && document.fonts.ready){
+  document.fonts.ready.then(function(){ if(allCards.length) apply(); });
+}
+
+})();
+</script>
+</body>
+</html>
