@@ -32,17 +32,17 @@ function dailyPosterEmail(){
   }).join("\n");
 
   var posters = fetchPosters();
-  var body = "Today's learning — " + n + " Elul\n\n" + lines + "\n\n";
+  var body = "Today's learning - " + n + " Elul\n\n" + lines + "\n\n";
 
   body += posters.length
     ? "The poster is attached. Open it on your phone and forward it to WhatsApp."
-    : "The poster image isn't ready yet — check the Daily poster action on GitHub. "
+    : "The poster image isn't ready yet. Check the Daily poster action on GitHub. "
       + "You can still open it directly:\n"
       + "https://yclearning.co.za/poster.html?day=" + n;
 
   MailApp.sendEmail({
     to: POSTER_MAIL_TO,
-    subject: "Today's learning — " + n + " Elul",
+    subject: "Today's learning - " + n + " Elul",
     body: body,
     attachments: posters
   });

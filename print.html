@@ -93,7 +93,7 @@
       <p class="status" id="status"></p>
       <p class="hint">
         The live feed carries what the website shows publicly. If it's missing sponsor
-        lines — or you'd rather not depend on it — paste the rows straight from the
+        lines, or if you'd rather not depend on it, paste the rows straight from the
         <strong>Sponsorships</strong> tab instead, including the header row.
       </p>
       <details style="margin-top:.9rem">
@@ -346,7 +346,7 @@ $("#btnLoad").addEventListener("click", function(){
       load(list);
     })
     .catch(function(){
-      setStatus("Couldn't reach the live sheet. Paste the rows in instead — it works offline and always has the sponsor lines.");
+      setStatus("Couldn't reach the live sheet. Paste the rows in instead; it works offline and always has the sponsor lines.");
     });
 });
 
@@ -354,7 +354,7 @@ $("#btnPaste").addEventListener("click", function(){
   var txt = $("#paste").value.trim();
   if(!txt){ setStatus("Paste the rows first, including the header row."); return; }
   var list = parseTable(txt);
-  if(!list.length){ setStatus("Couldn't read that — make sure the header row is included."); return; }
+  if(!list.length){ setStatus("Couldn't read that. Make sure the header row is included."); return; }
   load(list);
 });
 

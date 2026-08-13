@@ -928,7 +928,7 @@ footer a:hover{color:var(--gold-bright)}
     <p>This opens WalletDoc in a new tab. Use the reference below so the Foundation can match the payment to your sponsorship.</p>
     <div class="pay__ref">
       <small>Reference</small>
-      <b id="payDialogRef">Your Name + Kfar 2026</b>
+      <b id="payDialogRef">Your Name</b>
     </div>
     <a class="pay-modal__url" id="payDialogRaw" href="https://walletdoc.com/pay/YCFoundation" target="_blank" rel="noopener">https://walletdoc.com/pay/YCFoundation</a>
     <div class="pay-modal__actions">
@@ -1054,7 +1054,7 @@ footer a:hover{color:var(--gold-bright)}
           <dl class="pay__box" id="payBeforeBox"></dl>
           <div class="pay__ref">
             <small>Reference</small>
-            <b id="payBeforeRef">Your Name + Kfar 2026</b>
+            <b id="payBeforeRef">Your Name</b>
           </div>
           <p class="pay__why">Please use that reference exactly. It is how the Foundation matches your payment to your sponsorship.</p>
           <div class="pay__actions">
@@ -1372,18 +1372,19 @@ const CONFIG = {
      pay into — fill them in exactly as they appear on your bank
      statement. Leave `account` empty and the panel stays hidden.  */
   bank: {
-    accountName: "Yeshiva College Foundation",
+    accountName: "Yeshiva College Foundation Account",
     bankName:    "Standard Bank",
     account:     "001847244",
-    branch:      "004305",
+    branchName:  "Rosebank",
+    branch:      "051001",
     accountType: "Business Current Account",
-    swift:       "",        // optional — only for payments from abroad
-    note:        "",        // optional — anything else they should know
+    swift:       "",        // optional - only for payments from abroad
+    note:        "",        // optional - anything else they should know
 
     /* The Foundation's reference convention. {name} is replaced with
        the sponsor's own name, so they never paste "[Your Name]"
        literally — which is what people do. */
-    reference:   "{name} + Kfar 2026"
+    reference:   "{name}"
   },
 
   liveSource: "https://script.google.com/macros/s/AKfycbyxLZ54K7FTOmK42yDkjT49EiK2_H1TEAWH12cxN6auvGLDBT_wA8d5lw59XaSyB0sK/exec",
@@ -2192,6 +2193,7 @@ function paymentRows(ref){
     ["Account name", b.accountName],
     ["Bank",         b.bankName],
     ["Account #",    b.account],
+    ["Branch",       b.branchName],
     ["Branch code",  b.branch],
     ["Account type", b.accountType],
     ["SWIFT",        b.swift],

@@ -57,9 +57,9 @@
   <div class="controls">
     <select id="day"></select>
     <select id="size">
-      <option value="1080x1350">Post — 1080 × 1350</option>
-      <option value="1080x1920">Status — 1080 × 1920</option>
-      <option value="1080x1080">Square — 1080 × 1080</option>
+      <option value="1080x1350">Post - 1080 × 1350</option>
+      <option value="1080x1920">Status - 1080 × 1920</option>
+      <option value="1080x1080">Square - 1080 × 1080</option>
     </select>
     <button type="button" id="btnReload">Refresh</button>
   </div>
@@ -277,7 +277,7 @@ function fillDays(){
     var has = all.some(function(c){ return c.day === n; });
     var o = document.createElement("option");
     o.value = String(n);
-    o.textContent = n + " Elul — " + fmtLong.format(dayDate(n)) + (has ? "" : "  (open)");
+    o.textContent = n + " Elul - " + fmtLong.format(dayDate(n)) + (has ? "" : "  (open)");
     sel.appendChild(o);
   }
 
@@ -327,7 +327,7 @@ $("#btnShare").addEventListener("click", function(){
       });
     }
     $("#btnSave").click();
-    setStatus("Your browser can't hand images to WhatsApp — saved it instead.");
+    setStatus("Your browser can't hand images to WhatsApp, so it saved the file instead.");
   }).catch(function(){ /* dismissed the share sheet */ });
 });
 
