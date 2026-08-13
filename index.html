@@ -6,6 +6,7 @@
 <title>Elul 5786 | Sponsor a Seder of Learning | YC Learning Program</title>
 <meta name="description" content="Sponsor Torah learning in the Yeshiva College Beit Midrash this Elul. Dedicate a seder in memory of a loved one, for a refuah shleimah, or in honour of a simcha.">
 <meta name="theme-color" content="#0A101C">
+<link rel="icon" href="data:,">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -928,7 +929,7 @@ footer a:hover{color:var(--gold-bright)}
     <p>This opens WalletDoc in a new tab. Use the reference below so the Foundation can match the payment to your sponsorship.</p>
     <div class="pay__ref">
       <small>Reference</small>
-      <b id="payDialogRef">Your Name</b>
+      <b id="payDialogRef">Your Name + kfar 26</b>
     </div>
     <a class="pay-modal__url" id="payDialogRaw" href="https://walletdoc.com/pay/YCFoundation" target="_blank" rel="noopener">https://walletdoc.com/pay/YCFoundation</a>
     <div class="pay-modal__actions">
@@ -1054,7 +1055,7 @@ footer a:hover{color:var(--gold-bright)}
           <dl class="pay__box" id="payBeforeBox"></dl>
           <div class="pay__ref">
             <small>Reference</small>
-            <b id="payBeforeRef">Your Name</b>
+            <b id="payBeforeRef">Your Name + kfar 26</b>
           </div>
           <p class="pay__why">Please use that reference exactly. It is how the Foundation matches your payment to your sponsorship.</p>
           <div class="pay__actions">
@@ -1357,7 +1358,7 @@ const CONFIG = {
   eluStart: new Date(2026, 7, 14),
   eluDays: 29,
   roshHashana: new Date(2026, 8, 12, 0, 0, 0),   // 1 Tishrei 5787
-  galleryImages: ["hagba1.jpg","hagba2.jpg","hagba3.jpg","learning1.jpg","learning3.jpg","learning4.jpg","learning5.jpg","learning6.jpg"],
+  galleryImages: [],
 
   /* Public reservation endpoint. Do not put private donor data or
      API keys in this file; the site source is visible online. */
@@ -1384,7 +1385,7 @@ const CONFIG = {
     /* The Foundation's reference convention. {name} is replaced with
        the sponsor's own name, so they never paste "[Your Name]"
        literally — which is what people do. */
-    reference:   "{name}"
+    reference:   "{name} + kfar 26"
   },
 
   liveSource: "https://script.google.com/macros/s/AKfycbyxLZ54K7FTOmK42yDkjT49EiK2_H1TEAWH12cxN6auvGLDBT_wA8d5lw59XaSyB0sK/exec",
