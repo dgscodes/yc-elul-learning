@@ -1023,7 +1023,7 @@ footer a:hover{color:var(--gold-bright)}
           </div>
           <div class="f">
             <label for="fAmount">Amount (R)</label>
-            <input id="fAmount" type="number" min="0" step="10" inputmode="numeric" placeholder="360">
+            <input id="fAmount" type="number" min="0" step="10" inputmode="numeric" placeholder="540">
           </div>
         </div>
 
@@ -1216,7 +1216,7 @@ footer a:hover{color:var(--gold-bright)}
       <article class="tier rv">
         <h3>One Seder</h3>
         <p class="tier__heb">סֵדֶר אֶחָד</p>
-        <p class="tier__price">R360</p>
+        <p class="tier__price">R540</p>
         <p class="tier__per">Recommended amount · morning or night</p>
         <ul>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>One seder of dedicated learning</li>
@@ -1231,7 +1231,7 @@ footer a:hover{color:var(--gold-bright)}
         <span class="tier__tag">Most chosen</span>
         <h3>A Full Day</h3>
         <p class="tier__heb">יוֹם שָׁלֵם</p>
-        <p class="tier__price">R1 800</p>
+        <p class="tier__price">R1 080</p>
         <p class="tier__per">Recommended amount · Monday-Thursday morning &amp; night seder · a whole day in their name</p>
         <ul>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>Both sedarim, start to finish</li>
@@ -1821,8 +1821,8 @@ function openDay(n){
   const foot = document.createElement("p");
   foot.style.cssText = "font-size:.78rem;color:var(--on-night-3);margin-top:1rem;text-align:center";
   foot.textContent = scheduled.length === 2
-    ? "Recommended amounts: R360 per seder · R1 800 for the full day"
-    : "Recommended amount: R360 for the scheduled morning seder";
+    ? "Recommended amounts: R540 per seder · R1 080 for the full day"
+    : "Recommended amount: R540 for the scheduled morning seder";
   wrap.appendChild(foot);
 
   wrap.querySelectorAll("[data-take]").forEach(b=>{
