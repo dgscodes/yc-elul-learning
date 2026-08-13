@@ -1096,7 +1096,8 @@ footer a:hover{color:var(--gold-bright)}
 
           <div class="done__actions">
             <a class="btn btn--gold" id="btnPay" href="#" target="_blank" rel="noopener" aria-haspopup="dialog">Pay by card</a>
-            <button type="button" class="btn btn--ink" id="btnDownload2">Download card</button>
+            <a class="btn btn--ink" id="btnWhatsAppAdmin" href="#" target="_blank" rel="noopener">Send WhatsApp confirmation</a>
+            <button type="button" class="btn btn--ink" id="btnDownload2">Download/share card</button>
           </div>
         </div>
       </div>
@@ -1366,6 +1367,7 @@ const CONFIG = {
 
   /* Card/wallet link, shown as a button alongside the EFT details. */
   payUrl: "https://walletdoc.com/pay/YCFoundation",
+  adminWhatsApp: "+27 66 433 5434",
 
   /* ── YOUR BANKING DETAILS ────────────────────────────────────
      Shown to the sponsor once they've reserved, and repeated in
@@ -2282,6 +2284,42 @@ function renderPayment(bookingCode){
   $("#btnCopyBank").onclick = ()=> copyPaymentRows(rows);
 }
 
+function waNumber(raw){
+  let n = String(raw || "").replace(/\D/g, "");
+  if(n.charAt(0) === "0") n = "27" + n.slice(1);
+  return n;
+}
+
+function adminWhatsAppText(n, seder, bookingCode){
+  const amount = $("#fAmount").value.trim();
+  return [
+    "New YC Elul sponsorship",
+    "",
+    "Booking: " + bookingCode,
+    "Slot: " + n + " Elul 5786 - " + fmtLong.format(dayDate(n)) + " - " +
+      (seder === "both" ? "Both sedarim" : sederLabel(seder)),
+    "Dedication: " + leadLine() + " " + state.name.trim(),
+    state.heb.trim() ? "Hebrew name: " + state.heb.trim() : "",
+    state.from.trim() ? "Sponsored by: " + state.from.trim() : "",
+    $("#fAnon").checked ? "Anonymous: Yes" : "",
+    "Amount pledged: R" + (amount || "not given"),
+    "Payment reference: " + payReference(),
+    "",
+    "Sponsor: " + $("#fSponsorName").value.trim(),
+    "Email: " + $("#fEmail").value.trim(),
+    "Phone: " + $("#fPhone").value.trim()
+  ].filter(Boolean).join("\n");
+}
+
+function wireAdminWhatsApp(n, seder, bookingCode){
+  const btn = $("#btnWhatsAppAdmin");
+  const phone = waNumber(CONFIG.adminWhatsApp);
+  if(!btn || !phone){ if(btn) btn.hidden = true; return; }
+  btn.href = "https://wa.me/" + phone + "?text=" +
+    encodeURIComponent(adminWhatsAppText(n, seder, bookingCode));
+  btn.hidden = false;
+}
+
 function showDone(n, seder){
   const entry = { type: state.type, name: state.name.trim(), heb: state.heb.trim() };
   (seder === "both" ? ["morning","night"] : [seder]).forEach(k=>{
@@ -2299,6 +2337,7 @@ function showDone(n, seder){
   renderPayment(bookingRef(n, seder));
 
   wirePaymentPopup($("#btnPay"));
+  wireAdminWhatsApp(n, seder, bookingRef(n, seder));
 
   formEl.hidden = true;
   $("#donePanel").hidden = false;
